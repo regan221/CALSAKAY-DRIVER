@@ -36,13 +36,12 @@ public class Dashboard extends AppCompatActivity {
         snv.addSpaceItem(new SpaceItem("History", R.drawable.ic_dashboard_history));
         snv.addSpaceItem(new SpaceItem("Messages", R.drawable.ic_dashboard_messages));
         snv.addSpaceItem(new SpaceItem("Logout", R.drawable.ic_dashboard_logout));
-
+        snv.setCentreButtonSelectable(true);
         showFragment(0);
 
         snv.setSpaceOnClickListener(new SpaceOnClickListener() {
             @Override
             public void onCentreButtonClick() {
-                snv.setCentreButtonSelectable(true);
                 snv.setCentreButtonSelected();
                 showFragment(4);
             }
