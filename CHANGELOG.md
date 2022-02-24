@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.0.0] - 2022-02-24
+## [1.0.0] - Feb 22 2022
 ### Added
 - Login page
 - Dashboard
