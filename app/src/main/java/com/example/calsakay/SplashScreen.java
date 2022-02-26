@@ -33,7 +33,7 @@ public class SplashScreen extends AppCompatActivity implements DatabaseAccessCal
             file.mkdir();
             File fileEvents = new File(SplashScreen.this.getFilesDir()+"/text/config");
             try {
-                File gpxfile = new File(file, "config");
+                File gpxfile = new File(fileEvents, "config");
                 FileWriter writer = new FileWriter(gpxfile);
                 writer.write("0");
                 writer.flush();

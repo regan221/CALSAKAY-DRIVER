@@ -32,8 +32,6 @@ public class MessagesRecViewAdapter extends RecyclerView.Adapter<MessagesRecView
         holder.tvMessageSender.setText(messages.get(position).getSender());
         holder.tvMessagePreview.setText(messages.get(position).getMessage());
         holder.tvMessageTimestamp.setText(messages.get(position).getTimestamp().toString());
-
-
     }
 
     @Override
