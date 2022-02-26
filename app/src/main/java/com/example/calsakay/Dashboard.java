@@ -134,7 +134,6 @@ public class Dashboard extends AppCompatActivity {
                         .replace(R.id.flDashboard, fgFindDrivers)
                         .commit();
                 break;
-
         }
     }
 }
