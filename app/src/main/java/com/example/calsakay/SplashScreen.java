@@ -31,13 +31,13 @@ public class SplashScreen extends AppCompatActivity implements DatabaseAccessCal
         File file = new File(SplashScreen.this.getFilesDir(), "text");
         if (!file.exists()) {
             file.mkdir();
-            File fileEvents = new File(SplashScreen.this.getFilesDir()+"/text/config");
             try {
-                File gpxfile = new File(fileEvents, "config");
+                File gpxfile = new File(file, "config");
                 FileWriter writer = new FileWriter(gpxfile);
                 writer.write("0");
                 writer.flush();
                 writer.close();
+                Toast.makeText(this, readFile(), Toast.LENGTH_LONG).show();
             } catch (Exception e){
                 Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
             }
