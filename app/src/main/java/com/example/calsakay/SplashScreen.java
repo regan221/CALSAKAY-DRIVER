@@ -28,6 +28,11 @@ public class SplashScreen extends AppCompatActivity implements DatabaseAccessCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        File file = new File(SplashScreen.this.getFilesDir(), "text");
+        if (!file.exists()) {
+            file.mkdir();
+        }
+
         status = readFile();
 
         if (status.contentEquals("0")){

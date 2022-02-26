@@ -13,10 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MessagesFragment extends Fragment {
+public class MessagesFragment extends Fragment implements DatabaseAccessCallback{
 
     private RecyclerView rvMessages;
+    private ArrayList<Messages> messages = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,36 +32,24 @@ public class MessagesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        rvMessages = view.findViewById(R.id.rvMessagesContainer);
+        this.rvMessages = view.findViewById(R.id.rvMessagesContainer);
+        DatabaseAccess db = new DatabaseAccess(getActivity());
+//        db.executeQuery("SELECT * FROM messages WHERE ");
+//        //TODO: GET THE MESSAGES(INBOX)
+    }
 
-        ArrayList<Messages> messages = new ArrayList<>();
+    @Override
+    public void QueryResponse(List<String[]> data) {
+        messages.clear();
 
-        messages.add(new Messages("Driver 1", "Nandito nako maam", "Feb 22 2022 1:00pm"));
-        messages.add(new Messages("Driver 12", "Nandito nako maam", "Feb 22 2022 1:00pm"));
-        messages.add(new Messages("Driver 16", "Nandito nako maam", "Feb 22 2022 1:00pm"));
-        messages.add(new Messages("Driver 1", "Nandito nako maam", "Feb 22 2022 1:00pm"));
-        messages.add(new Messages("Driver 12", "Nandito nako maam", "Feb 22 2022 1:00pm"));
-        messages.add(new Messages("Driver 16", "Nandito nako maam", "Feb 22 2022 1:00pm"));
-        messages.add(new Messages("Driver 1", "Nandito nako maam", "Feb 22 2022 1:00pm"));
-        messages.add(new Messages("Driver 12", "Nandito nako maam", "Feb 22 2022 1:00pm"));
-        messages.add(new Messages("Driver 16", "Nandito nako maam", "Feb 22 2022 1:00pm"));messages.add(new Messages("Driver 1", "Nandito nako maam", "Feb 22 2022 1:00pm"));
-        messages.add(new Messages("Driver 12", "Nandito nako maam", "Feb 22 2022 1:00pm"));
-        messages.add(new Messages("Driver 16", "Nandito nako maam", "Feb 22 2022 1:00pm"));messages.add(new Messages("Driver 1", "Nandito nako maam", "Feb 22 2022 1:00pm"));
-        messages.add(new Messages("Driver 12", "Nandito nako maam", "Feb 22 2022 1:00pm"));
-        messages.add(new Messages("Driver 16", "Nandito nako maam", "Feb 22 2022 1:00pm"));
-        messages.add(new Messages("Driver 1", "Nandito nako maam", "Feb 22 2022 1:00pm"));
-        messages.add(new Messages("Driver 12", "Nandito nako maam", "Feb 22 2022 1:00pm"));
-        messages.add(new Messages("Driver 16", "Nandito nako maam", "Feb 22 2022 1:00pm"));
-        messages.add(new Messages("Driver 1", "Nandito nako maam", "Feb 22 2022 1:00pm"));
-        messages.add(new Messages("Driver 12", "Nandito nako maam", "Feb 22 2022 1:00pm"));
-        messages.add(new Messages("Driver 16", "Nandito nako maam", "Feb 22 2022 1:00pm"));
+        for(String[] chats : data){
 
-
+        }
 
         MessagesRecViewAdapter messageAdapter = new MessagesRecViewAdapter();
         messageAdapter.setMessages(messages);
 
-        rvMessages.setAdapter(messageAdapter);
-        rvMessages.setLayoutManager(new LinearLayoutManager(getActivity()));
+        this.rvMessages.setAdapter(messageAdapter);
+        this.rvMessages.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 }

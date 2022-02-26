@@ -1,6 +1,5 @@
 package com.example.calsakay;
 
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +29,10 @@ public class MessagesRecViewAdapter extends RecyclerView.Adapter<MessagesRecView
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tvMessageSender.setText(messages.get(position).getMessageSender());
-        holder.tvMessagePreview.setText(messages.get(position).getMessagePreview());
-        holder.tvMessageTimestamp.setText(messages.get(position).getMessageTimestamp());
+        holder.tvMessageSender.setText(messages.get(position).getSender());
+        holder.tvMessagePreview.setText(messages.get(position).getMessage());
+        holder.tvMessageTimestamp.setText(messages.get(position).getTimestamp().toString());
+
 
     }
 

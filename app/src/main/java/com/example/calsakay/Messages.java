@@ -1,47 +1,66 @@
 package com.example.calsakay;
 
+import java.util.Date;
+
 public class Messages {
 
-    private String messageSender;
-    private String messagePreview;
-    private String messageTimestamp;
+    private String sender;
+    private int senderId;
+    private String recipient;
+    private int recipientId;
+    private Date timestamp;
+    private String message;
+    private int id;
 
-    public Messages(String messageSender, String messagePreview, String messageTimestamp) {
-        this.messageSender = messageSender;
-        this.messagePreview = messagePreview;
-        this.messageTimestamp = messageTimestamp;
+    public Messages(String sender, int senderId, String recipient, int recipientId, Date timestamp, String message, int id) {
+        this.sender = sender;
+        this.senderId = senderId;
+        this.recipient = recipient;
+        this.recipientId = recipientId;
+        this.timestamp = timestamp;
+        this.message = message;
+        this.id = id;
     }
 
     @Override
     public String toString() {
         return "Messages{" +
-                "messageSender='" + messageSender + '\'' +
-                ", messagePreview='" + messagePreview + '\'' +
-                ", messageTimestamp='" + messageTimestamp + '\'' +
+                "sender='" + sender + '\'' +
+                ", senderId=" + senderId +
+                ", recipient='" + recipient + '\'' +
+                ", recipientId=" + recipientId +
+                ", timestamp=" + timestamp +
+                ", message='" + message + '\'' +
+                ", id=" + id +
                 '}';
     }
 
-    public String getMessageSender() {
-        return messageSender;
+    public String getSender() {
+        return sender;
     }
 
-    public void setMessageSender(String messageSender) {
-        this.messageSender = messageSender;
+    public int getSenderId() {
+        return senderId;
     }
 
-    public String getMessagePreview() {
-        return messagePreview;
+    public String getRecipient() {
+        return recipient;
     }
 
-    public void setMessagePreview(String messagePreview) {
-        this.messagePreview = messagePreview;
+    public int getRecipientId() {
+        return recipientId;
     }
 
-    public String getMessageTimestamp() {
-        return messageTimestamp;
+    public Date getTimestamp() {
+        return timestamp;
     }
 
-    public void setMessageTimestamp(String messageTimestamp) {
-        this.messageTimestamp = messageTimestamp;
+    public String getMessage() {
+        return message;
     }
+
+    public int getId() {
+        return id;
+    }
+
 }

@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="80dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rlRoot"
+    app:cardElevation="3dp"
+    app:strokeColor="@color/gray"
+    app:strokeWidth="1dp"
+    android:layout_marginBottom="3dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="#C5CAE9"
+    android:foreground="?attr/selectableItemBackground"
     >
-
-    <View
-        android:id="@+id/vMessageSeparator1"
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="@color/gray" />
 
     <RelativeLayout
         android:id="@+id/rlMessageItemContainer"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="10dp"
         >
 
@@ -26,6 +27,8 @@
             android:layout_height="wrap_content"
             android:text="Reciever"
             android:textSize="25sp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/black"
             />
 
         <TextView
@@ -35,25 +38,23 @@
             android:layout_height="wrap_content"
             android:text="Date"
             android:textSize="20sp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/black"
             />
 
         <TextView
             android:layout_marginTop="10dp"
-            android:layout_below="@id/tvMessageSender"
             android:id="@+id/tvMessagePreview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Message Content"
             android:textSize="20sp"
+            android:layout_alignParentBottom="true"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/black"
+            android:ellipsize="end"
+            android:maxLines="1"
             />
     </RelativeLayout>
 
-    <View
-        android:layout_below="@+id/rlMessageItemContainer"
-        android:id="@+id/vMessageSeparator2"
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_centerHorizontal="true"
-        android:background="@color/gray" />
-
-</RelativeLayout>
+</com.google.android.material.card.MaterialCardView>
