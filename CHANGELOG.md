@@ -1,6 +1,12 @@
 # Changelog
 
-## [1.0.0] - Feb 22 2022
+## Feb 25 2022
+### Added
+- Messages List
+- message object
+- fragment sent below the navigation bar
+
+## Feb 24 2022
 ### Added
 - Login page
 - Splash Screen
