@@ -88,6 +88,8 @@ public class Dashboard extends AppCompatActivity {
         FindDriversFragment fgFindDrivers = new FindDriversFragment();
         MessagesFragment fgMessages = new MessagesFragment();
 
+        //
+
         getSupportFragmentManager().beginTransaction().replace(R.id.flDashboard, fgProfile)
                 .commit();
 
@@ -135,5 +137,9 @@ public class Dashboard extends AppCompatActivity {
                         .commit();
                 break;
         }
+    }
+
+    public List<String[]> getUserData() {
+        return userData;
     }
 }

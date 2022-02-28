@@ -70,16 +70,6 @@ public class SplashScreen extends AppCompatActivity implements DatabaseAccessCal
     }
 
 
-    @Override
-    public void QueryResponse(List<String[]> data) {
-        if(data.size() > 0){
-            openMainActivity = new Intent(SplashScreen.this, Dashboard.class);
-            openMainActivity.putExtra("userData", (Serializable) data);
-            openActivity();
-        }
-
-    }
-
     private void openActivity(){
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -89,5 +79,14 @@ public class SplashScreen extends AppCompatActivity implements DatabaseAccessCal
                 finish();
             }
         }, 3000);
+    }
+
+    @Override
+    public void QueryResponse(List<String[]> data) {
+        if(data.size() > 0){
+            openMainActivity = new Intent(SplashScreen.this, Dashboard.class);
+            openMainActivity.putExtra("userData", (Serializable) data);
+            openActivity();
+        }
     }
 }

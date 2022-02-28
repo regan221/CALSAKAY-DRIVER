@@ -4,51 +4,46 @@ import java.util.Date;
 
 public class Messages {
 
-    private String sender;
     private int senderId;
-    private String recipient;
-    private int recipientId;
+    private int recieverId;
     private Date timestamp;
     private String message;
     private int id;
+    private String threadName;
+    private String messageType;
+    private boolean isRead;
 
-    public Messages(String sender, int senderId, String recipient, int recipientId, Date timestamp, String message, int id) {
-        this.sender = sender;
+    public Messages(int senderId, int recieverId, Date timestamp, String message, int id, String threadName, String messageType, boolean isRead) {
         this.senderId = senderId;
-        this.recipient = recipient;
-        this.recipientId = recipientId;
+        this.recieverId = recieverId;
         this.timestamp = timestamp;
         this.message = message;
         this.id = id;
+        this.threadName = threadName;
+        this.messageType = messageType;
+        this.isRead = isRead;
     }
 
     @Override
     public String toString() {
         return "Messages{" +
-                "sender='" + sender + '\'' +
-                ", senderId=" + senderId +
-                ", recipient='" + recipient + '\'' +
-                ", recipientId=" + recipientId +
+                "senderId=" + senderId +
+                ", recieverId=" + recieverId +
                 ", timestamp=" + timestamp +
                 ", message='" + message + '\'' +
                 ", id=" + id +
+                ", threadName='" + threadName + '\'' +
+                ", messageType='" + messageType + '\'' +
+                ", isRead=" + isRead +
                 '}';
-    }
-
-    public String getSender() {
-        return sender;
     }
 
     public int getSenderId() {
         return senderId;
     }
 
-    public String getRecipient() {
-        return recipient;
-    }
-
-    public int getRecipientId() {
-        return recipientId;
+    public int getRecieverId() {
+        return recieverId;
     }
 
     public Date getTimestamp() {
@@ -63,4 +58,15 @@ public class Messages {
         return id;
     }
 
+    public String getThreadName() {
+        return threadName;
+    }
+
+    public String getMessageType() {
+        return messageType;
+    }
+
+    public boolean isRead() {
+        return isRead;
+    }
 }

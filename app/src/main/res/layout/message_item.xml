@@ -31,16 +31,14 @@
             android:textColor="@color/black"
             />
 
-        <TextView
-            android:id="@+id/tvMessageTimestamp"
+        <ImageView
+            android:id="@+id/ivIsRead"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date"
-            android:textSize="20sp"
-            android:fontFamily="sans-serif"
-            android:textColor="@color/black"
-            />
+            android:src="@drawable/ic_is_read"
+            android:visibility="invisible"
+          />
 
         <TextView
             android:layout_marginTop="10dp"
