@@ -41,18 +41,17 @@
           />
 
         <TextView
-            android:layout_marginTop="10dp"
             android:id="@+id/tvMessagePreview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Message Content"
-            android:textSize="20sp"
             android:layout_alignParentBottom="true"
-            android:fontFamily="sans-serif"
-            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
             android:ellipsize="end"
+            android:fontFamily="sans-serif"
             android:maxLines="1"
-            />
+            android:text="Message Content"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
     </RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>

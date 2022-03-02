@@ -138,7 +138,6 @@ public class MessagesFragment extends Fragment{
                 resultSet.next();
                 if(resultSet.getInt("numRow") == 0){
                     emptyMessages++;
-
                 } else {
                     recieverList = new int[resultSet.getInt("numRow")];
                     resultSet = statement.executeQuery("SELECT DISTINCT(`reciever`) FROM `messages` WHERE `reciever` = " + userId + " OR `sender` = " + userId);

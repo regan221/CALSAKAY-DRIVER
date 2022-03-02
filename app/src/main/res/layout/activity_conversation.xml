@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Conversation">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rvConversation"
+        />
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/black"
+        android:layout_alignParentBottom="true"
+        android:padding="5dp"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5dp"
+        >
+
+
+        <EditText
+            android:id="@+id/etTypeMEssage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Type a message..."
+            android:textColor="#333"
+            android:textSize="20sp"
+            android:layout_weight="70"
+            android:inputType="textLongMessage"
+            />
+
+        <com.dd.CircularProgressButton
+            android:id="@+id/btMessageSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_weight="30"
+            />
+
+    </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</RelativeLayout>

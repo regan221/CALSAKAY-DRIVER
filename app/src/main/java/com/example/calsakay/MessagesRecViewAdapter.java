@@ -1,13 +1,17 @@
 package com.example.calsakay;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +42,15 @@ public class MessagesRecViewAdapter extends RecyclerView.Adapter<MessagesRecView
         } else {
             holder.ivIsRead.setVisibility(View.INVISIBLE);
         }
+
+        holder.rlRoot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent openConversation = new Intent(view.getContext(), Conversation.class);
+                view.getContext().startActivity(openConversation);
+            }
+        });
+
     }
 
     @Override
@@ -49,6 +62,7 @@ public class MessagesRecViewAdapter extends RecyclerView.Adapter<MessagesRecView
 
         private TextView tvMessageSender, tvMessagePreview;
         private ImageView ivIsRead;
+        private MaterialCardView rlRoot;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,6 +70,7 @@ public class MessagesRecViewAdapter extends RecyclerView.Adapter<MessagesRecView
             tvMessageSender = itemView.findViewById(R.id.tvMessageSender);
             tvMessagePreview = itemView.findViewById(R.id.tvMessagePreview);
             ivIsRead = itemView.findViewById(R.id.ivIsRead);
+            rlRoot = itemView.findViewById(R.id.rlRoot);
         }
     }
 }
