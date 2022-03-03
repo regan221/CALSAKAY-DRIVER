@@ -6,10 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".Conversation">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:padding="5dp"
+        android:background="@color/oca"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginStart="5dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:cardCornerRadius="25dp"
+            >
+            <ImageView
+                android:id="@+id/ivChatmateImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvConvoName"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="8dp"
+            android:text="AHHAHA"
+            android:textSize="15sp"
+            />
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvConversation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rvConversation"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="60dp"
         />
 
 

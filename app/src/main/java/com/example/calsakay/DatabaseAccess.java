@@ -80,8 +80,10 @@ public class DatabaseAccess  {
                 this.columnCountAsync = resultSet.getMetaData().getColumnCount();
                 this.fetchedDataAsync = convertResultSetToList(resultSet, columnCountAsync);
                 connection.close();
+                databaseQuery = "";
             } catch (Exception e) {
                 Log.d("SQL QUERY ERROR: ", e.toString());
+                e.printStackTrace();
             }
             return null;
         }
@@ -104,8 +106,10 @@ public class DatabaseAccess  {
                 Statement statement = connection.createStatement();
                 statement.executeUpdate(databaseQuery);
                 connection.close();
+                databaseQuery = "";
             } catch (Exception e) {
                 Log.d("SQL NONQUERY ERROR: ", e.toString());
+                e.printStackTrace();
             }
             return null;
         }

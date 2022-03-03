@@ -24,11 +24,13 @@
         android:layout_marginBottom="2dp"
         app:cardBackgroundColor="@color/white"
         android:visibility="visible"
+        android:minWidth="50dp"
         >
 
 
 
     <RelativeLayout
+        android:id="@+id/rlSent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -38,10 +40,11 @@
             android:id="@+id/tvMessageSent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Message Sent"
+            android:text="a"
             android:textSize="18sp"
             android:fontFamily="sans-serif"
             android:textColor="@color/black"
+            android:layout_alignEnd="@+id/tvConversationSentTime"
             />
 
         <TextView
@@ -49,8 +52,7 @@
             android:layout_below="@id/tvMessageSent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="10:35 pm"
-            android:layout_alignEnd="@+id/tvMessageSent"
+            android:text="asdsdsds"
             />
 
     </RelativeLayout>
@@ -74,6 +76,7 @@
         android:layout_marginBottom="2dp"
         app:cardBackgroundColor="@color/oca"
         android:visibility="visible"
+        android:minWidth="50dp"
         >
 
         <RelativeLayout
@@ -86,7 +89,7 @@
                 android:id="@+id/tvMessageRecieved"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Message Recieved"
+                android:text="s"
                 android:textSize="18sp"
                 android:fontFamily="sans-serif"
                 android:textColor="@color/black"

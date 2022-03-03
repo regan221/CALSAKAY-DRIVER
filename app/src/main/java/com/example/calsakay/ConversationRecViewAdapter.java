@@ -34,7 +34,7 @@ public class ConversationRecViewAdapter extends RecyclerView.Adapter<Conversatio
     @Override
     public void onBindViewHolder(@NonNull ConversationRecViewAdapter.ViewHolder holder, int position) {
 
-        if (convo.get(position).isSent()){
+        if (convo.get(position).getMessageType().contentEquals("outgoing")){
             holder.tvMessageSent.setText(convo.get(position).getMessageContent());
             holder.tvConversationSentTime.setText(convo.get(position).getMessageTimestamp());
             holder.cvConversationSent.setVisibility(View.VISIBLE);
@@ -46,6 +46,8 @@ public class ConversationRecViewAdapter extends RecyclerView.Adapter<Conversatio
             holder.cvConversationSent.setVisibility(View.GONE);
         }
     }
+
+
 
     @Override
     public int getItemCount() {

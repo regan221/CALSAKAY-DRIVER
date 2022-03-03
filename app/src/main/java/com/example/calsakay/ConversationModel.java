@@ -1,22 +1,25 @@
 package com.example.calsakay;
 
+import androidx.annotation.Nullable;
+
+import org.ocpsoft.prettytime.PrettyTime;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ConversationModel {
 
-    private String messageContent, messageTimestamp;
-    private boolean isSent;
-
-    public ConversationModel(String messageContent, String messageTimestamp, boolean isSent) {
-        this.messageContent = messageContent;
-        this.messageTimestamp = messageTimestamp;
-        this.isSent = isSent;
-    }
+    PrettyTime p = new PrettyTime();
+    private String messageContent, messageTimestamp, messageType;
 
     @Override
     public String toString() {
         return "ConversationModel{" +
                 "messageContent='" + messageContent + '\'' +
                 ", messageTimestamp='" + messageTimestamp + '\'' +
-                ", isSent=" + isSent +
+                ", messageType='" + messageType + '\'' +
                 '}';
     }
 
@@ -28,7 +31,21 @@ public class ConversationModel {
         return messageTimestamp;
     }
 
-    public boolean isSent() {
-        return isSent;
+
+    public String getMessageType() {
+        return messageType;
+    }
+
+    public ConversationModel(String messageContent, String messageTimestamp, String messageType) {
+        this.messageContent = messageContent;
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-d HH:mm:ss");
+        Date date = null;
+        try {
+            date = formatter.parse(messageTimestamp);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.messageTimestamp = p.format(date);
+        this.messageType = messageType;
     }
 }

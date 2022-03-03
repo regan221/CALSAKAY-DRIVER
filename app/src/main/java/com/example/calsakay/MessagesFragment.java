@@ -68,7 +68,6 @@ public class MessagesFragment extends Fragment{
         private Date convertToDateObject(String mysqlString) throws ParseException {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-d HH:mm:ss");
             Date date = formatter.parse(mysqlString);
-            System.out.println(date);
             return date;
         }
 
@@ -169,7 +168,7 @@ public class MessagesFragment extends Fragment{
 
 
                 for (Integer inbId : inboxList){
-                    resultSet = statement.executeQuery("SELECT CONCAT(calsakay_tbl_users.first_name, ' ', calsakay_tbl_users.last_name) AS threadName, " +
+                    resultSet = statement.executeQuery("SELECT calsakay_tbl_users.user_image AS chatmateImage, CONCAT(calsakay_tbl_users.first_name, ' ', calsakay_tbl_users.last_name) AS threadName, " +
                             "IF(messages.sender = " + userId + ", 'outgoing', 'ingoing') AS messageType, " +
                             "messages.sender, messages.reciever, messages.message_id, messages.message, messages.read, messages.time, messages.read " +
                             "FROM `messages` JOIN calsakay_tbl_users ON " +
@@ -186,7 +185,10 @@ public class MessagesFragment extends Fragment{
                                 Integer.parseInt(resultSet.getString("message_id")),
                                 resultSet.getString("threadName"),
                                 resultSet.getString("messageType"),
-                                resultSet.getBoolean("read")
+                                resultSet.getBoolean("read"),
+                                inbId,
+                                userId,
+                                resultSet.getString("chatmateImage")
                         ));
                     }
                 }

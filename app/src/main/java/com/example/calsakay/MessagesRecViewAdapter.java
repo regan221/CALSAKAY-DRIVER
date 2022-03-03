@@ -1,5 +1,6 @@
 package com.example.calsakay;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +36,7 @@ public class MessagesRecViewAdapter extends RecyclerView.Adapter<MessagesRecView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.tvMessageSender.setText(messages.get(position).getThreadName());
         holder.tvMessagePreview.setText(messages.get(position).getMessage());
         if(messages.get(position).isRead() == false){
@@ -47,6 +49,7 @@ public class MessagesRecViewAdapter extends RecyclerView.Adapter<MessagesRecView
             @Override
             public void onClick(View view) {
                 Intent openConversation = new Intent(view.getContext(), Conversation.class);
+                openConversation.putExtra("messageData", (Serializable) messages.get(position));
                 view.getContext().startActivity(openConversation);
             }
         });

@@ -1,8 +1,9 @@
 package com.example.calsakay;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Messages {
+public class Messages implements Serializable {
 
     private int senderId;
     private int recieverId;
@@ -12,8 +13,11 @@ public class Messages {
     private String threadName;
     private String messageType;
     private boolean isRead;
+    private int chatMateId;
+    private int passengerId;
+    private String chatmateImage;
 
-    public Messages(int senderId, int recieverId, Date timestamp, String message, int id, String threadName, String messageType, boolean isRead) {
+    public Messages(int senderId, int recieverId, Date timestamp, String message, int id, String threadName, String messageType, boolean isRead, int chatMateId, int passengerId, String chatmateImage) {
         this.senderId = senderId;
         this.recieverId = recieverId;
         this.timestamp = timestamp;
@@ -22,6 +26,9 @@ public class Messages {
         this.threadName = threadName;
         this.messageType = messageType;
         this.isRead = isRead;
+        this.chatMateId = chatMateId;
+        this.passengerId = passengerId;
+        this.chatmateImage = chatmateImage;
     }
 
     @Override
@@ -35,6 +42,7 @@ public class Messages {
                 ", threadName='" + threadName + '\'' +
                 ", messageType='" + messageType + '\'' +
                 ", isRead=" + isRead +
+                ", chatMateId=" + chatMateId +
                 '}';
     }
 
@@ -68,5 +76,17 @@ public class Messages {
 
     public boolean isRead() {
         return isRead;
+    }
+
+    public int getChatMateId() {
+        return chatMateId;
+    }
+
+    public int getPassengerId() {
+        return passengerId;
+    }
+
+    public String getChatmateImage() {
+        return chatmateImage;
     }
 }
