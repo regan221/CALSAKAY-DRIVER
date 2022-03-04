@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ public class MessagesFragment extends Fragment{
 
     private RecyclerView rvMessages;
     boolean noMessages = false;
+    Dashboard currentAct;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,22 +45,27 @@ public class MessagesFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        currentAct = (Dashboard) getActivity();
 
         this.rvMessages = view.findViewById(R.id.rvMessagesContainer);
-//        //TODO: GET THE MESSAGES(INBOX)
         // WHERE (`reciever` = 62 AND `sender` = 80) OR (`reciever` = 80 AND `sender` = 62);
         // SELECT DISTINCT(`reciever`) FROM `messages` WHERE `reciever` = 62 OR `sender` = 62;  SELECT DISTINCT(`sender`) FROM `messages` WHERE `reciever` = 62 OR `sender` = 62;
 
-        new AccessDB().execute();
 
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                handler.postDelayed(this, 5000);
+                new AccessDB().execute();
+            }
+        }, 3000);
 
     }
 
 
 
         class AccessDB extends AsyncTask<Void, Void, Void> {
-        private Dashboard currentAct = (Dashboard) getActivity();
         String records1 = "", error = "";
         List<Integer> inbox;
         int[] recieverList, senderList, inboxList;
@@ -202,6 +209,7 @@ public class MessagesFragment extends Fragment{
 
         @Override
         protected void onPostExecute(Void unused) {
+
 
             MessagesRecViewAdapter messageAdapter = new MessagesRecViewAdapter();
 

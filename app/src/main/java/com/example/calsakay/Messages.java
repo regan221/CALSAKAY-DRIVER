@@ -62,6 +62,10 @@ public class Messages implements Serializable {
         return message;
     }
 
+    public void setRead(boolean read) {
+        isRead = read;
+    }
+
     public int getId() {
         return id;
     }

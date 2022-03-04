@@ -48,6 +48,8 @@ public class MessagesRecViewAdapter extends RecyclerView.Adapter<MessagesRecView
         holder.rlRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DatabaseAccess dbAccessForRead = new DatabaseAccess(view.getContext());
+                dbAccessForRead.executeNonQuery("UPDATE messages SET `read` = 1 WHERE message_id = " + messages.get(position).getId());
                 Intent openConversation = new Intent(view.getContext(), Conversation.class);
                 openConversation.putExtra("messageData", (Serializable) messages.get(position));
                 view.getContext().startActivity(openConversation);

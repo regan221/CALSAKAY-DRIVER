@@ -109,6 +109,7 @@ public class DatabaseAccess  {
                 databaseQuery = "";
             } catch (Exception e) {
                 Log.d("SQL NONQUERY ERROR: ", e.toString());
+                Log.d("SQL QUERY: ", databaseQuery);
                 e.printStackTrace();
             }
             return null;

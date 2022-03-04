@@ -28,11 +28,13 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="aad82665-62fb-499b-8934-38364710b647">
-      <console name="Connection" type="STANDARD" schema="feqxsxpi_calsakay" session="Main"><![CDATA[SELECT CONCAT(calsakay_tbl_users.first_name, ' ', calsakay_tbl_users.last_name) AS threadName, IF(messages.sender = 62, 'outgoing', 'ingoing') AS messageType, messages.sender, messages.reciever, messages.message_id, messages.message, messages.read, messages.time, messages.read FROM `messages` JOIN calsakay_tbl_users ON IF(messages.sender = 62, messages.reciever = calsakay_tbl_users.id, messages.sender = calsakay_tbl_users.id) WHERE (`reciever` = 62 AND `sender` = 78) OR (`reciever` = 78 AND `sender` = 62)]]></console>
+      <console name="Connection" type="STANDARD" schema="feqxsxpi_calsakay" session="Main"><![CDATA[SELECT * FROM messages;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="aad82665-62fb-499b-8934-38364710b647" object-ref="consoles/Connection" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="aad82665-62fb-499b-8934-38364710b647" />

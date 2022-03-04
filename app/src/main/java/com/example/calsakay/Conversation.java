@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
@@ -46,7 +47,9 @@ public class Conversation extends AppCompatActivity implements DatabaseAccessCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
 
-        DatabaseAccess dbAccess = new DatabaseAccess(this);
+        DatabaseAccess dbAccessForRefreshing = new DatabaseAccess(this);
+        DatabaseAccess dbAccessForSending = new DatabaseAccess(this);
+
 
         rvConvo = findViewById(R.id.rvConversation);
         sendButton = findViewById(R.id.btMessageSend);
@@ -59,11 +62,11 @@ public class Conversation extends AppCompatActivity implements DatabaseAccessCal
             @Override
             public void onClick(View view) {
                 String messageContent = etMessage.getText().toString(), messageTimeStamp = dateFormat.format(new Date()), messageType = "outgoing";
-                if(!messageContent.matches("")){
+                if(!TextUtils.isEmpty(messageContent)){
                     convo.add(new ConversationModel(messageContent, messageTimeStamp, messageType));
                     convoAdapter.notifyItemInserted(convo.size() - 1);
                     rvConvo.scrollToPosition(convo.size() - 1);
-                    dbAccess.executeNonQuery("INSERT INTO `messages` " +
+                    dbAccessForSending.executeNonQuery("INSERT INTO `messages` " +
                             "(`message_id`, `sender`, `reciever`, `message`, `read`, `time`) " +
                             "VALUES (NULL, " + userId + ", " + chatMateId + ", '" + messageContent + "', " + 1 + ", CURRENT_TIMESTAMP)");
                     etMessage.setText("");
@@ -91,7 +94,7 @@ public class Conversation extends AppCompatActivity implements DatabaseAccessCal
             @Override
             public void run() {
                 handler.postDelayed(this, 5000);
-                dbAccess.executeQuery("SELECT CONCAT(calsakay_tbl_users.first_name, ' ', " +
+                dbAccessForRefreshing.executeQuery("SELECT CONCAT(calsakay_tbl_users.first_name, ' ', " +
                         "calsakay_tbl_users.last_name) AS threadName, " +
                         "IF(messages.sender = " + userId + ", 'outgoing', 'ingoing') AS messageType, " +
                         "messages.sender, messages.reciever, messages.message_id, messages.message, " +

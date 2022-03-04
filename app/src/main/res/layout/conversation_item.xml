@@ -40,11 +40,11 @@
             android:id="@+id/tvMessageSent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="a"
+            android:text="s"
             android:textSize="18sp"
             android:fontFamily="sans-serif"
             android:textColor="@color/black"
-            android:layout_alignEnd="@+id/tvConversationSentTime"
+
             />
 
         <TextView
@@ -52,7 +52,7 @@
             android:layout_below="@id/tvMessageSent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="asdsdsds"
+            android:text="asdssssssssssdsds"
             />
 
     </RelativeLayout>
