@@ -143,7 +143,7 @@ public class SignUp4Fragment extends Fragment {
         if (requestCode == 1 && resultCode == RESULT_OK) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 30, stream);
             byte[] bytes = stream.toByteArray();
 
             profileImage = Base64.encodeToString(bytes, Base64.DEFAULT);

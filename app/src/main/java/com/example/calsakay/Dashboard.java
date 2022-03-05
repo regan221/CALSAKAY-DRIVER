@@ -27,7 +27,8 @@ public class Dashboard extends AppCompatActivity {
         Intent intent = getIntent();
         userData = (List<String[]>) intent.getSerializableExtra("userData");
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.oca)));
+        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.oca)));
+        getSupportActionBar().hide();
 
         snv = (SpaceNavigationView) findViewById(R.id.space);
         snv.initWithSaveInstanceState(savedInstanceState);

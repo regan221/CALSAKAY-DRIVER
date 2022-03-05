@@ -3,14 +3,110 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fgFindDrivers"
     tools:context=".FindDriversFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvPickup"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="FIND DRIVERS" />
+        android:layout_margin="20dp"
+        app:cardCornerRadius="10dp"
+        app:strokeColor="@color/oca"
+        app:strokeWidth="2dp"
+        >
+
+        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+            android:id="@+id/spPickupPoint"
+            android:layout_margin="5dp"
+            app:smsp_isSearchable="true"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:smsp_floatingLabelColor="@color/black"
+            app:smsp_floatingLabelText="You will be picked at:"
+            app:smsp_floatingLabelSize="18sp"
+            app:smsp_searchHeaderText="Pick-Up Locations"
+            app:smsp_hintSize="18sp"
+            app:smsp_hint="Select pick-up Point"
+            app:smsp_hintColor="@color/black"
+            app:smsp_itemColor="@color/black"
+            app:smsp_itemSize="18sp"
+            app:smsp_itemListColor="@color/black"
+            app:smsp_itemListHintBackgroundColor="@color/black"
+            app:smsp_itemListHintColor="@color/oca"
+            app:smsp_arrowColor="@color/oca"
+            app:smsp_searchHeaderBackgroundColor="@color/oca"
+            app:smsp_underlineColor="@color/oca"
+            app:smsp_multilineError="false"
+            app:smsp_selectedItemListColor="@color/oca"
+            />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvDropoff"
+        android:layout_below="@id/cvPickup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="10dp"
+        app:strokeColor="@color/oca"
+        app:strokeWidth="2dp"
+        >
+
+        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+            android:id="@+id/spDropoffPoint"
+            app:smsp_isSearchable="true"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:smsp_floatingLabelColor="@color/black"
+            app:smsp_floatingLabelText="You will be dropped at:"
+            app:smsp_floatingLabelSize="18sp"
+            app:smsp_searchHeaderText="Drop-Off Locations"
+            app:smsp_hintSize="18sp"
+            app:smsp_hint="Select drop-off Point"
+            app:smsp_hintColor="@color/black"
+            app:smsp_itemColor="@color/black"
+            app:smsp_itemSize="18sp"
+            app:smsp_itemListColor="@color/black"
+            app:smsp_itemListHintBackgroundColor="@color/black"
+            app:smsp_itemListHintColor="@color/oca"
+            app:smsp_arrowColor="@color/oca"
+            app:smsp_searchHeaderBackgroundColor="@color/oca"
+            app:smsp_underlineColor="@color/oca"
+            app:smsp_multilineError="false"
+            app:smsp_selectedItemListColor="@color/oca"
+            />
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.dd.CircularProgressButton
+        android:id="@+id/btFindDrivers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cvDropoff"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textColor="@color/white"
+        app:cpb_selectorIdle="@color/oca"
+        app:cpb_colorProgress="@color/oca"
+        app:cpb_textIdle="Find your driver!"
+        android:padding="5dp"
+        app:cpb_cornerRadius="5dp"
+        app:cpb_textProgress="Finding your driver..."
+
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btFindDrivers"
+        android:layout_margin="30dp"
+        >
+
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

@@ -184,7 +184,7 @@ public class SignUp3Fragment extends Fragment {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
 //            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.calsakay_logo);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 30, stream);
             byte[] bytes = stream.toByteArray();
 
 
