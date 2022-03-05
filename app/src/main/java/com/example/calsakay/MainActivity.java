@@ -30,7 +30,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements DatabaseAccessCallback{
 
-    private CircularProgressButton btLogin;
+    private CircularProgressButton btLogin, btSignup;
     private EditText etUsername, etPassword;
 
 
@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseAccessCal
         setContentView(R.layout.activity_main);
 
         btLogin = findViewById(R.id.btLogin);
+        btSignup = findViewById(R.id.btSignUp);
         etUsername = findViewById(R.id.etLoginUsername);
         etPassword = findViewById(R.id.etLoginPassword);
 
@@ -80,7 +81,13 @@ public class MainActivity extends AppCompatActivity implements DatabaseAccessCal
 
             }
         });
-
+        btSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, Signup.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override

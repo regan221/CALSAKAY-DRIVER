@@ -64,14 +64,33 @@
         android:layout_marginTop="10dp"
         android:fontFamily="sans-serif-black"
         android:padding="5dp"
-        app:cpb_colorProgress="@color/white"
-        app:cpb_colorIndicator="@color/gray"
         android:textColor="@color/black"
         android:textSize="15sp"
+        app:cpb_colorIndicator="@color/gray"
+        app:cpb_colorProgress="@color/white"
         app:cpb_cornerRadius="10dp"
         app:cpb_selectorIdle="@color/white"
         app:cpb_textComplete="Success!"
         app:cpb_textError="Incorrect"
         app:cpb_textIdle="Log In" />
+
+    <com.dd.CircularProgressButton
+        android:id="@+id/btSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@+id/btLogin"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-black"
+        android:padding="5dp"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:cpb_colorIndicator="@color/gray"
+        app:cpb_colorProgress="@color/white"
+        app:cpb_cornerRadius="10dp"
+        app:cpb_selectorIdle="@color/white"
+        app:cpb_textComplete="Success!"
+        app:cpb_textError="Incorrect"
+        app:cpb_textIdle="Signup" />
 
 </RelativeLayout>

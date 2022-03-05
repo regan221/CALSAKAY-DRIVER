@@ -4,17 +4,25 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.1921875" />
-        <entry key="app/src/main/res/layout/activity_conversation.xml" value="0.2526041666666667" />
-        <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.18802083333333333" />
+        <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.14" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/activity_signup.xml" value="0.21197916666666666" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.2526041666666667" />
-        <entry key="app/src/main/res/layout/conversation_item.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/fragment_find_drivers.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/layout/fragment_history.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/layout/fragment_messages.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.26510416666666664" />
+        <entry key="app/src/main/res/layout/fragment_sign_up1.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_sign_up2.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_sign_up3.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_sign_up4.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_sign_up5.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_sign_up_final_step.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_signup5.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_su_step1.xml" value="0.21197916666666666" />
         <entry key="app/src/main/res/layout/message_item.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/nav_menu.xml" value="0.18802083333333333" />
+        <entry key="app/src/main/res/xml/file_paths.xml" value="0.17844202898550723" />
       </map>
     </option>
   </component>
