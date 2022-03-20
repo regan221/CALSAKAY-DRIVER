@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 import com.luseen.spacenavigation.SpaceItem;
 import com.luseen.spacenavigation.SpaceNavigationView;
@@ -11,13 +12,19 @@ import com.luseen.spacenavigation.SpaceOnClickListener;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class Dashboard extends AppCompatActivity {
+public class Dashboard extends AppCompatActivity implements DatabaseAccessCallback{
     private SpaceNavigationView snv;
     private List<String[]> userData;
+    private DatabaseAccess databaseAccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +33,7 @@ public class Dashboard extends AppCompatActivity {
 
         Intent intent = getIntent();
         userData = (List<String[]>) intent.getSerializableExtra("userData");
-
+        databaseAccess = new DatabaseAccess(this);
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.oca)));
         getSupportActionBar().hide();
 
@@ -57,6 +64,9 @@ public class Dashboard extends AppCompatActivity {
                 showFragment(itemIndex);
             }
         });
+
+
+        databaseAccess.executeQuery("SELECT * FROM calsakay_tbl_rides_info");
     }
 
     @Override
@@ -142,5 +152,11 @@ public class Dashboard extends AppCompatActivity {
 
     public List<String[]> getUserData() {
         return userData;
+    }
+
+
+    @Override
+    public void QueryResponse(List<String[]> data) {
+
     }
 }

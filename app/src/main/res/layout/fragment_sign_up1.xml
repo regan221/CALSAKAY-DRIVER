@@ -70,6 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Male"
+                    android:checked="true"
                     android:textSize="14sp"/>
                 <RadioButton
                     android:id="@+id/rdb_female"
@@ -89,13 +90,14 @@
                 android:layout_height="wrap_content"
                 android:text="Birthday"/>
 
-            <DatePicker
-                android:id="@+id/dp_birthday"
+            <TextView
+                android:id="@+id/tv_datePicker"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:calendarViewShown="false"
-                android:datePickerMode="spinner"
-                android:layout_marginBottom="10dp"/>
+                android:text="Jan / 00 / 00"
+                android:gravity="center"
+                android:textColor="@color/black"/>
+
         </LinearLayout>
 
     </LinearLayout>

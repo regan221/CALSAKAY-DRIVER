@@ -1,5 +1,7 @@
 package com.example.calsakay;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -17,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,21 +68,24 @@ public class SignUp1Fragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-    private RadioGroup grdb;
-    private RadioButton rd_button;
-    private DatePicker datePicker;
+    private RadioGroup radioGroup;
+    private RadioButton radioButton;
     private Button btnNext, btnCancel;
     private EditText et_firstName, et_lastName, et_phoneNum, et_email, et_address;
-    private String str_firstName, str_lastName, str_gender, str_birthday, str_phoneNum, str_email, str_address;
+    private TextView tv_date;
 
+    private DatePickerDialog datePickerDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sign_up1, container, false);
+        Signup signup = (Signup) getActivity();
+        initDatePicker();
+        radioGroup = view.findViewById(R.id.grdb_gender);
 
-        grdb = view.findViewById(R.id.grdb_gender);
-        datePicker = view.findViewById(R.id.dp_birthday);
+        tv_date = view.findViewById(R.id.tv_datePicker);
+        tv_date.setText(getTodaysDate());
 
         btnNext = (Button) view.findViewById(R.id.btn_signup1);
         btnCancel = (Button) view.findViewById(R.id.btn_cancel_signup);
@@ -89,56 +96,117 @@ public class SignUp1Fragment extends Fragment {
         et_email = (EditText) view.findViewById(R.id.et_email);
         et_address = (EditText) view.findViewById(R.id.et_address);
 
+        tv_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDatePicker();
+            }
+        });
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int radioId = radioGroup.getCheckedRadioButtonId();
+                radioButton = getActivity().findViewById(radioId);
 
-                int selectedId = grdb.getCheckedRadioButtonId();
-//                rd_button = (RadioButton) view.findViewById(R.id.rdb_female);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm-DD-yyyy");
+                String contact_num = et_phoneNum.getText().toString();
 
-                str_firstName = et_firstName.getText().toString();
-                str_lastName = et_lastName.getText().toString();
-                str_gender = "test";
-                str_birthday = datePicker.toString();
-                str_email = et_email.getText().toString();
-                str_phoneNum = et_phoneNum.getText().toString();
-                str_address = et_address.getText().toString();
-
-
-
-
-//                if (firstName.matches("")){
-//                    Toast.makeText(getActivity(), "Firstname is required", Toast.LENGTH_LONG).show();
-//                }else if (lastName.matches("")){
-//                    Toast.makeText(getActivity(), "Lastname is required", Toast.LENGTH_LONG).show();
-//                }else if(phoneNum.matches("")){
-//                    Toast.makeText(getActivity(), "Phone number is required", Toast.LENGTH_LONG).show();
-//                }else if (email.matches("")){
-//                    Toast.makeText(getActivity(), "Email is required", Toast.LENGTH_LONG).show();
-//                }else{
-                    Bundle bundle = new Bundle();
-                    bundle.putString("fname", str_firstName);
-                    bundle.putString("lname", str_lastName);
-                    bundle.putString("gender", str_gender);
-                    bundle.putString("birthday", str_birthday);
-                    bundle.putString("email", str_email);
-                    bundle.putString("phonenum", str_phoneNum);
-                    bundle.putString("address", str_address);
-
+                if (et_firstName.getText().toString().matches("")){
+                    Toast.makeText(getActivity(), "Firstname is required", Toast.LENGTH_LONG).show();
+                }else if (et_lastName.getText().toString().matches("")){
+                    Toast.makeText(getActivity(), "Lastname is required", Toast.LENGTH_LONG).show();
+                }else if (et_email.getText().toString().matches("")){
+                    Toast.makeText(getActivity(), "Email is required", Toast.LENGTH_LONG).show();
+                }else if(et_phoneNum.getText().toString().length() != 11){
+                    Toast.makeText(getActivity(), "Phone number must be exactly 11 digits.", Toast.LENGTH_SHORT).show();
+                }else if(!contact_num.startsWith("09")){
+                    Toast.makeText(getActivity(), "Contact number must start at '09'", Toast.LENGTH_SHORT).show();
+                }else if(et_phoneNum.getText().toString().matches("")){
+                    Toast.makeText(getActivity(), "Phone number is required", Toast.LENGTH_LONG).show();
+                }else if(et_address.getText().toString().matches("")){
+                    Toast.makeText(getActivity(), "Address is required", Toast.LENGTH_SHORT).show();
+                }else{
+                    signup.setFname(et_firstName.getText().toString());
+                    signup.setLname(et_lastName.getText().toString());
+                    signup.setGender(radioButton.getText().toString());
+                    signup.setBirthday(tv_date.getText().toString());
+                    signup.setEmail(et_email.getText().toString());
+                    signup.setContact_num(et_phoneNum.getText().toString());
+                    signup.setAddress(et_address.getText().toString());
                     SignUp2Fragment signUp2Fragment = new SignUp2Fragment();
-                    SignUp5Fragment signUp5Fragment = new SignUp5Fragment();
-                    signUp5Fragment.setArguments(bundle);
                     getFragmentManager().beginTransaction().replace(R.id.signupLayout, signUp2Fragment).commit();
-//                }
-
-
+                }
             }
         });
+
 
 
         return view;
     }
 
+    public String getTodaysDate(){
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        month = month + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        return makeDateString(day, month, year);
 
+
+    }
+    private void initDatePicker(){
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+                String date = makeDateString(day, month, year);
+                tv_date.setText(date);
+            }
+        };
+
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        int style = AlertDialog.THEME_HOLO_LIGHT;
+
+        datePickerDialog = new DatePickerDialog(getActivity(), style, dateSetListener, year, month, day);
+    }
+
+    private String makeDateString(int day, int month, int year){
+        return getMonthFormat(month) + "-" + day + "-" + year;
+    }
+
+    private String getMonthFormat(int month){
+        if (month == 1)
+            return "01";
+        if (month == 2)
+            return "02";
+        if (month == 3)
+            return "03";
+        if (month == 4)
+            return "04";
+        if (month == 5)
+            return "05";
+        if (month == 6)
+            return "06";
+        if (month == 7)
+            return "07";
+        if (month == 8)
+            return "08";
+        if (month == 9)
+            return "09";
+        if (month == 10)
+            return "10";
+        if (month == 11)
+            return "11";
+        if (month == 12)
+            return "12";
+
+        return "01";
+    }
+
+    public void openDatePicker(){
+        datePickerDialog.show();
+    }
 }

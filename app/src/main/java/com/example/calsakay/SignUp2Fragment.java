@@ -69,7 +69,9 @@ public class SignUp2Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sign_up2, container, false);
+        Signup signup = (Signup) getActivity();
         Bundle bundle = new Bundle();
+
         btn_proceed = view.findViewById(R.id.btn_signup2);
         btn_back = view.findViewById(R.id.btn_signup2_back);
         et_medical_job = view.findViewById(R.id.et_medical_job);
@@ -77,32 +79,29 @@ public class SignUp2Fragment extends Fragment {
         et_comp_num = view.findViewById(R.id.company_num);
         et_comp_address = view.findViewById(R.id.company_address);
 
-
         btn_proceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                str_medical_job = et_medical_job.getText().toString();
-                compname = et_comp_name.getText().toString();
-                compaddress = et_comp_address.getText().toString();
-                compnum = et_comp_num.getText().toString();
-
-
-//                if (compname.matches("")){
-//                    Toast.makeText(getActivity(), "Company name is required.", Toast.LENGTH_SHORT).show();
-//                }else if(compaddress.matches("")){
-//                    Toast.makeText(getActivity(), "Company number is required.", Toast.LENGTH_SHORT).show();
-//                }else if(compnum.matches("")){
-//                    Toast.makeText(getActivity(), "Please check the company number, it must contain 11 digits.", Toast.LENGTH_SHORT).show();
-//                }else{
-                    bundle.putString("medical_job", str_medical_job);
-                    bundle.putString("company_name", compname);
-                    bundle.putString("company_address", compaddress);
-                    bundle.putString("company_number", compnum);
+                if(et_medical_job.getText().toString().matches("")){
+                    Toast.makeText(getActivity(), "Medical job is required", Toast.LENGTH_SHORT).show();
+                }else if (et_comp_name.getText().toString().matches("")){
+                    Toast.makeText(getActivity(), "Company name is required.", Toast.LENGTH_SHORT).show();
+                }else if(et_comp_address.getText().toString().matches("")){
+                    Toast.makeText(getActivity(), "Company number is required.", Toast.LENGTH_SHORT).show();
+                }else if(et_comp_num.getText().toString().length() != 11){
+                    Toast.makeText(getActivity(), "Please check the company number, it must contain 11 digits.", Toast.LENGTH_SHORT).show();
+                }else if(!et_comp_num.getText().toString().startsWith("09")){
+                    Toast.makeText(getActivity(), "Contact number must start at 09", Toast.LENGTH_SHORT).show();
+                }else{
+                    signup.setMedical_job(et_medical_job.getText().toString());
+                    signup.setCompany_name(et_comp_name.getText().toString());
+                    signup.setCompany_address(et_comp_address.getText().toString());
+                    signup.setContact_num(et_comp_num.getText().toString());
 
                     SignUp3Fragment signUp3Fragment = new SignUp3Fragment();
                     signUp3Fragment.setArguments(bundle);
                     getFragmentManager().beginTransaction().replace(R.id.signupLayout, signUp3Fragment).commit();
-//                }
+                }
             }
         });
 

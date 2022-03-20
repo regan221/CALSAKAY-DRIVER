@@ -82,16 +82,18 @@ public class SignUp3Fragment extends Fragment {
 
     private Button btn_signup3, btn_signup3_back;
     private ImageView iv_front, iv_back;
-    private String frontimageBase64, backimageBase64;
+    private String frontimageBase64 = "", backimageBase64 = "";
     private String currentPhotoPath;
     private int frontImage = 0, backImage = 0;
 
+    Signup signup;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sign_up3, container, false);
         Bundle bundle = new Bundle();
+        signup = (Signup) getActivity();
 
         btn_signup3 = view.findViewById(R.id.btn_signup3);
         btn_signup3_back = view.findViewById(R.id.btn_signup3_back);
@@ -144,7 +146,6 @@ public class SignUp3Fragment extends Fragment {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                     startActivityForResult(intent, 1);
-                    Toast.makeText(getActivity(), frontimageBase64, Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -154,12 +155,15 @@ public class SignUp3Fragment extends Fragment {
         btn_signup3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bundle.putString("frontImage", frontimageBase64);
-                bundle.putString("backImage", backimageBase64);
-
-                SignUp4Fragment signUp4Fragment = new SignUp4Fragment();
-                signUp4Fragment.setArguments(bundle);
-                getFragmentManager().beginTransaction().replace(R.id.signupLayout, signUp4Fragment).commit();
+                if (frontimageBase64.matches("")){
+                    Toast.makeText(getActivity(), "ID front image is required", Toast.LENGTH_SHORT).show();
+                }else if(backimageBase64.matches("")){
+                    Toast.makeText(getActivity(), "ID back image is required", Toast.LENGTH_SHORT).show();
+                }else{
+                    SignUp4Fragment signUp4Fragment = new SignUp4Fragment();
+                    signUp4Fragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction().replace(R.id.signupLayout, signUp4Fragment).commit();
+                }
             }
         });
 
@@ -183,7 +187,6 @@ public class SignUp3Fragment extends Fragment {
         if (requestCode == 1 && resultCode == RESULT_OK) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
-//            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.calsakay_logo);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 30, stream);
             byte[] bytes = stream.toByteArray();
 
@@ -193,14 +196,16 @@ public class SignUp3Fragment extends Fragment {
                 frontImage = 1;
                 backImage = 0;
                 frontimageBase64 = Base64.encodeToString(bytes, Base64.DEFAULT);
-                Log.d("Value: ", frontimageBase64);
+//                Log.d("Value: ", frontimageBase64);
+                signup.setFrontImageId(frontimageBase64);
 
             }else{
                 iv_back.setImageBitmap(bitmap);
                 backImage = 1;
                 frontImage = 0;
                 backimageBase64 = Base64.encodeToString(bytes, Base64.DEFAULT);
-                Log.d("Value2: ", backimageBase64);
+//                Log.d("Value2: ", backimageBase64);
+                signup.setBackImageId(backimageBase64);
             }
 
         }

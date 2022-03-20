@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -76,8 +77,9 @@ public class SignUp4Fragment extends Fragment {
 
     private Button btn_signup4, btn_signup4_back;
     private ImageView iv_profile_pic;
-    private String profileImage;
+    private String profileImage = "";
     private String currentPhotoPath;
+    Signup signup;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,6 +87,8 @@ public class SignUp4Fragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sign_up4, container, false);
         Bundle bundle = new Bundle();
+        signup = (Signup) getActivity();
+
         btn_signup4 = view.findViewById(R.id.btn_signup4);
         btn_signup4_back = view.findViewById(R.id.btn_signup4_back);
         iv_profile_pic = view.findViewById(R.id.iv_profilPic);
@@ -115,11 +119,15 @@ public class SignUp4Fragment extends Fragment {
         btn_signup4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bundle.putString("profile_pic", profileImage);
 
-                SignUp5Fragment signUp5Fragment = new SignUp5Fragment();
-                signUp5Fragment.setArguments(bundle);
-                getFragmentManager().beginTransaction().replace(R.id.signupLayout, signUp5Fragment).commit();
+                if(profileImage.matches("")){
+                    Toast.makeText(getActivity(), "Profile image is required", Toast.LENGTH_SHORT).show();
+                }else{
+                    SignUp5Fragment signUp5Fragment = new SignUp5Fragment();
+                    signUp5Fragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction().replace(R.id.signupLayout, signUp5Fragment).commit();
+                }
+
             }
         });
 
@@ -148,7 +156,8 @@ public class SignUp4Fragment extends Fragment {
 
             profileImage = Base64.encodeToString(bytes, Base64.DEFAULT);
             iv_profile_pic.setImageBitmap(bitmap);
-            Log.d("Value3", profileImage);
+//            Log.d("Value3", profileImage);
+            signup.setProfile_picture(profileImage);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.calsakay;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,18 +63,22 @@ public class SignUp5Fragment extends Fragment {
     private Button btn_signup5, btn_signup5_back;
     private EditText et_password, et_username, et_password_confirm;
     private DatabaseAccess dbAccess;
-    private Bundle extras;
+//    private Bundle extras;
 
     private String str_username, str_password, str_confirm_password;
     // test string
     private String account_status = "0", role = "1", date_joined = "0";
     private Bundle bundle;
+    Signup signup;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sign_up5, container, false);
         bundle = this.getArguments();
+        signup = (Signup) getActivity();
 
         et_username = view.findViewById(R.id.et_username);
         et_password = view.findViewById(R.id.et_password);
@@ -87,14 +93,24 @@ public class SignUp5Fragment extends Fragment {
         btn_signup5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                str_username = et_username.getText().toString();
-                str_password = et_password.getText().toString();
-                str_confirm_password = et_password_confirm.getText().toString();
 
-                insertData();
-                SignUpFinalStepFragment signUpFinalStepFragment = new SignUpFinalStepFragment();
-                signUpFinalStepFragment.setArguments(bundle);
-                getFragmentManager().beginTransaction().replace(R.id.signupLayout, signUpFinalStepFragment).commit();
+                signup.setUsername(et_username.getText().toString());
+                signup.setPassword(et_password.getText().toString());
+
+                if (et_username.getText().toString().matches("")){
+                    Toast.makeText(getActivity(), "Username is required", Toast.LENGTH_SHORT).show();
+                }else if(et_password.getText().toString().matches("")){
+                    Toast.makeText(getActivity(), "Password is required", Toast.LENGTH_SHORT).show();
+                }else if(et_password_confirm.getText().toString().matches("")){
+                    Toast.makeText(getActivity(), "Password confirmation is required", Toast.LENGTH_SHORT).show();
+                }else if(!et_password.getText().toString().matches(et_password_confirm.getText().toString())){
+                    Toast.makeText(getActivity(), "Password field and confirmation password is not same.", Toast.LENGTH_SHORT).show();
+                }else{
+                    insertData();
+                    SignUpFinalStepFragment signUpFinalStepFragment = new SignUpFinalStepFragment();
+                    signUpFinalStepFragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction().replace(R.id.signupLayout, signUpFinalStepFragment).commit();
+                }
 
             }
         });
@@ -102,8 +118,6 @@ public class SignUp5Fragment extends Fragment {
         btn_signup5_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                bundle.putString("company_address", et_comp_address.getText().toString());
-
                 SignUp4Fragment signUp4Fragment = new SignUp4Fragment();
                 signUp4Fragment.setArguments(bundle);
                 getFragmentManager().beginTransaction().replace(R.id.signupLayout, signUp4Fragment).commit();
@@ -113,26 +127,36 @@ public class SignUp5Fragment extends Fragment {
     }
 
     public void insertData(){
+        ProgressDialog pd = new ProgressDialog(getActivity());
+        pd.setMessage("Setting up your account...");
+        pd.show();
         try {
             dbAccess.executeNonQuery("INSERT INTO calsakay_tbl_users (" +
-                    "first_name)" +
+                    "first_name, last_name, gender, birthday, mobile_number, address, medical_job, company_name, company_address, " +
+                    "company_number, front_image_name, back_image_name, email, user_image, username, password, account_status, role)" +
                     "VALUES ('" +
-                    bundle.getString("fname") + "')");
-//                    extras.getString("medical_job") + "','" +
-//                    extras.getString("company_name") + "','" +
-//                    extras.getString("company_adress") + "','" +
-//                    extras.getString("company_number") + "','" +
-//                    extras.getString("frontImage") + "','" +
-//                    extras.getString("backImage") + "','" +
-//                    extras.getString("profile_pic") + "','" +
-//                    str_username + "','" +
-//                    str_password + "','" +
-//                    "0" + "','" +
-//                    "1" + "','" +
-//                    "'00/00/00')");
-//
+                    signup.getFname() + "','" +
+                    signup.getLname() + "','" +
+                    signup.getGender() + "','" +
+                    signup.getBirthday() + "','" +
+                    signup.getContact_num() + "','" +
+                    signup.getAddress() + "','" +
+                    signup.getMedical_job() + "','" +
+                    signup.getCompany_name() + "','" +
+                    signup.getCompany_address() + "','" +
+                    signup.getCompany_number() + "','" +
+                    signup.getFrontImageId() + "','" +
+                    signup.getBackImageId() + "','" +
+                    signup.getEmail() + "','" +
+                    signup.getProfile_picture() + "','" +
+                    signup.getUsername() + "','" +
+                    signup.getPassword() + "','0','1')");
+            pd.dismiss();
         }catch (Exception e){
             Log.e("CATCH ERROR: ", e.getMessage());
+            pd.dismiss();
+            Toast.makeText(getActivity(), "Failed to create your account, please try again later or contact the admin.", Toast.LENGTH_SHORT).show();
+
         }
     }
 }
