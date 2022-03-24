@@ -28,7 +28,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="aad82665-62fb-499b-8934-38364710b647">
-      <console name="Connection" type="STANDARD" schema="feqxsxpi_calsakay" session="Main"><![CDATA[SELECT * FROM messages;]]></console>
+      <console name="Connection" type="STANDARD" schema="feqxsxpi_calsakay" session="Main"><![CDATA[ALTER TABLE `calsakay_tbl_locations` DROP `drop_off`;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

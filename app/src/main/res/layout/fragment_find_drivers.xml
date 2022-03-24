@@ -5,10 +5,12 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fgFindDrivers"
-    tools:context=".FindDriversFragment">
+    tools:context=".FindDriversFragment"
+    android:paddingTop="140dp">
+
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvPickup"
+        android:id="@+id/cvPersons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -16,6 +18,43 @@
         app:strokeColor="@color/oca"
         app:strokeWidth="2dp"
         >
+
+        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+            android:id="@+id/spPersons"
+            android:layout_margin="5dp"
+            app:smsp_isSearchable="false"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:spinnerMode="dialog"
+            app:smsp_floatingLabelColor="@color/black"
+            app:smsp_floatingLabelText="Persons:"
+            app:smsp_floatingLabelSize="18sp"
+            app:smsp_hintSize="18sp"
+            app:smsp_hint="How many persons?"
+            app:smsp_hintColor="@color/black"
+            app:smsp_itemColor="@color/black"
+            app:smsp_itemSize="25sp"
+            app:smsp_itemListColor="@color/black"
+            app:smsp_itemListHintBackgroundColor="@color/black"
+            app:smsp_itemListHintColor="@color/oca"
+            app:smsp_arrowColor="@color/oca"
+            app:smsp_underlineColor="@color/oca"
+            app:smsp_multilineError="false"
+            app:smsp_selectedItemListColor="@color/oca"
+            />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvPickup"
+        android:layout_below="@+id/cvPersons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="10dp"
+        app:strokeColor="@color/oca"
+        app:strokeWidth="2dp"
+        tools:ignore="UnknownId">
 
         <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
             android:id="@+id/spPickupPoint"
@@ -94,19 +133,8 @@
         app:cpb_textIdle="Find your driver!"
         android:padding="5dp"
         app:cpb_cornerRadius="5dp"
-        app:cpb_textProgress="Finding your driver..."
-
+        android:visibility="gone"
         />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/btFindDrivers"
-        android:layout_margin="30dp"
-        >
-
-
-    </RelativeLayout>
 
 
 </RelativeLayout>

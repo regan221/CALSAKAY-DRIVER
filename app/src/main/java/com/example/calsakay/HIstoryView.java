@@ -22,7 +22,7 @@ public class HIstoryView extends AppCompatActivity {
         Intent intent = getIntent();
         historiesList = (Histories) intent.getSerializableExtra("info");
         tv_test = findViewById(R.id.tv_test);
-        tv_test.setText(historiesList.getFrontliner_id());
+        tv_test.setText(String.valueOf(historiesList.getFrontliner_id()));
 
 
     }
