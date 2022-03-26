@@ -45,7 +45,7 @@ public class MessagesFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        currentAct = (Dashboard) getActivity();
+        this.currentAct = (Dashboard) getActivity();
 
         this.rvMessages = view.findViewById(R.id.rvMessagesContainer);
         // WHERE (`reciever` = 62 AND `sender` = 80) OR (`reciever` = 80 AND `sender` = 62);

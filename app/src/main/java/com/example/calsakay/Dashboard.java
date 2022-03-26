@@ -30,21 +30,21 @@ public class Dashboard extends AppCompatActivity implements DatabaseAccessCallba
         setContentView(R.layout.activity_dashboard);
 
         Intent intent = getIntent();
-        userData = (List<String[]>) intent.getSerializableExtra("userData");
+        this.userData = (List<String[]>) intent.getSerializableExtra("userData");
         getSupportActionBar().hide();
-        accepted = false;
+        this.accepted = false;
 
-        snv = (SpaceNavigationView) findViewById(R.id.space);
-        snv.initWithSaveInstanceState(savedInstanceState);
-        snv.showIconOnly();
-        snv.addSpaceItem(new SpaceItem("Profile", R.drawable.ic_dashboard_profile));
-        snv.addSpaceItem(new SpaceItem("History", R.drawable.ic_dashboard_history));
-        snv.addSpaceItem(new SpaceItem("Messages", R.drawable.ic_dashboard_messages));
-        snv.addSpaceItem(new SpaceItem("Logout", R.drawable.ic_dashboard_logout));
-        snv.setCentreButtonSelectable(true);
+        this.snv = (SpaceNavigationView) findViewById(R.id.space);
+        this.snv.initWithSaveInstanceState(savedInstanceState);
+        this.snv.showIconOnly();
+        this.snv.addSpaceItem(new SpaceItem("Profile", R.drawable.ic_dashboard_profile));
+        this.snv.addSpaceItem(new SpaceItem("History", R.drawable.ic_dashboard_history));
+        this.snv.addSpaceItem(new SpaceItem("Messages", R.drawable.ic_dashboard_messages));
+        this.snv.addSpaceItem(new SpaceItem("Logout", R.drawable.ic_dashboard_logout));
+        this.snv.setCentreButtonSelectable(true);
         showFragment(0);
 
-        snv.setSpaceOnClickListener(new SpaceOnClickListener() {
+        this.snv.setSpaceOnClickListener(new SpaceOnClickListener() {
             @Override
             public void onCentreButtonClick() {
                 snv.setCentreButtonSelected();
@@ -66,7 +66,7 @@ public class Dashboard extends AppCompatActivity implements DatabaseAccessCallba
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        snv.onSaveInstanceState(outState);
+        this.snv.onSaveInstanceState(outState);
     }
 
 
@@ -89,25 +89,24 @@ public class Dashboard extends AppCompatActivity implements DatabaseAccessCallba
 
     private void showFragment(int itemIndex){
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.flDashboard, fgProfile)
+        getSupportFragmentManager().beginTransaction().replace(R.id.flDashboard, this.fgProfile)
                 .commit();
 
         switch (itemIndex){
             case 0:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.flDashboard, fgProfile)
+                        .replace(R.id.flDashboard, this.fgProfile)
                         .commit();
                 break;
             case 1:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.flDashboard, fgHistory)
+                        .replace(R.id.flDashboard, this.fgHistory)
                         .commit();
                 break;
             case 2:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.flDashboard, fgMessages)
+                        .replace(R.id.flDashboard, this.fgMessages)
                         .commit();
-
                 break;
             case 3:
                 new SweetAlertDialog(Dashboard.this, SweetAlertDialog.WARNING_TYPE)
@@ -133,11 +132,11 @@ public class Dashboard extends AppCompatActivity implements DatabaseAccessCallba
             case 4:
                 if(accepted){
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.flDashboard, fgPassengerAcceptedFragment)
+                            .replace(R.id.flDashboard, this.fgPassengerAcceptedFragment)
                             .commit();
                 } else {
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.flDashboard, fgFindDrivers)
+                            .replace(R.id.flDashboard, this.fgFindDrivers)
                             .commit();
                 }
                 break;
@@ -148,20 +147,34 @@ public class Dashboard extends AppCompatActivity implements DatabaseAccessCallba
         return accepted;
     }
 
-    public void setAccepted(boolean accpt){
-        accepted = accpt;
+    public void setAccepted(boolean accpt, int driverId, int rideTraceId){
+        this.accepted = accpt;
+        Bundle bundle = new Bundle();
+        bundle.putInt("driverId", driverId);
+        bundle.putInt("rideTraceId", rideTraceId);
+        this.fgPassengerAcceptedFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flDashboard, fgPassengerAcceptedFragment)
+                .replace(R.id.flDashboard, this.fgPassengerAcceptedFragment)
                 .commit();
     }
 
     public List<String[]> getUserData() {
-        return userData;
+        return this.userData;
     }
 
 
     @Override
     public void QueryResponse(List<String[]> data) {
-        fgFindDrivers.fillPickupPoint(data);
+        switch (data.get(0)[data.get(0).length - 1]){
+            case "DRIVER DETAILS":
+                fgPassengerAcceptedFragment.setDriverDetails(data);
+                break;
+            case "PASSENGER DETAILS":
+                fgPassengerAcceptedFragment.initializeMessageDetails(data);
+                break;
+            default:
+                this.fgFindDrivers.fillPickupPoint(data);
+                break;
+        }
     }
 }

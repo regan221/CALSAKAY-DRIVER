@@ -10,7 +10,8 @@
     <ImageView
         android:id="@+id/ivDriverImage"
         android:layout_width="match_parent"
-        android:layout_height="250dp" />
+        android:layout_height="250dp"
+        />
 
 
     <com.github.clans.fab.FloatingActionMenu
@@ -21,32 +22,39 @@
         android:layout_alignEnd="@+id/ivDriverImage"
         android:layout_marginTop="-35dp"
         android:layout_marginRight="30dp"
-        app:menu_icon="@drawable/ic_fab_icon"
-        app:fab_colorNormal="@color/oca"
+        app:menu_colorNormal="@color/oca"
         app:fab_colorPressed="@color/orange"
         app:menu_labels_showAnimation="@anim/fab_slide_out_to_left"
         app:menu_openDirection="down"
+        app:menu_labels_hideAnimation="@anim/fab_slide_in_from_left"
         >
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fbPassengerAcceptedMenuItem1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_size="mini"
-            app:fab_label="Message"
-            />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fbPassengerAcceptedMenuItem2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/red"
+            android:src="@drawable/ic_fab_menu_cancel"
             app:fab_size="mini"
-            app:fab_label="Cancel"
+            app:fab_label="Cancel Driver"
             />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fbPassengerAcceptedMenuItem1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_fab_menu_message"
+            app:fab_colorNormal="@color/oca"
+            app:fab_colorPressed="@color/orange"
+            app:fab_size="mini"
+            app:fab_label="Message"
+            />
+
 
     </com.github.clans.fab.FloatingActionMenu>
 
     <RelativeLayout
+        android:id="@+id/rlDriverDetails"
         android:layout_below="@+id/ivDriverImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -54,11 +62,50 @@
         >
 
         <TextView
+            android:id="@+id/tvRideStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="HAHAHHAHA"
             />
 
+        <TextView
+            android:id="@+id/tvDriverName"
+            android:layout_below="@+id/tvRideStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name: "
+            />
+
+        <TextView
+            android:id="@+id/tvDriverMobileNumber"
+            android:layout_below="@id/tvDriverName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mobile Number: "
+            />
+
+        <TextView
+            android:id="@+id/tvDriverVehicleType"
+            android:layout_below="@id/tvDriverMobileNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vehicle Type: "
+            />
+
+        <TextView
+            android:id="@+id/tvDriverPlateNumber"
+            android:layout_below="@+id/tvDriverVehicleType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Plate Number: "
+            />
+
+        <TextView
+            android:id="@+id/tvDriveEmail"
+            android:layout_below="@+id/tvDriverPlateNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email: "
+            />
 
     </RelativeLayout>
 

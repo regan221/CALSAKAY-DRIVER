@@ -123,7 +123,7 @@ public class DatabaseAccess  {
 //        protected Void doInBackground(Void... voids) {
 //            try {
 //                Class.forName("com.mysql.jdbc.Driver");
-//                Connection connection = DriverManager.getConnection("jdbc:mysql://163.44.242.10:3306/feqxsxpi_edsel?characterEncoding=latin1","feqxsxpi_root", "UCC2021bsitKrazy");
+//                Connection connection = DriverManager.getConnection("jdbc:mysql://163.44.242.10:3306/feqxsxpi_calsakay?characterEncoding=latin1","feqxsxpi_root", "UCC2021bsitKrazy");
 //                Statement statement = connection.createStatement();
 //                ResultSet resultSet = statement.executeQuery("SELECT * FROM sdo");
 //

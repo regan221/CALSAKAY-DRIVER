@@ -39,15 +39,15 @@ public class MainActivity extends AppCompatActivity implements DatabaseAccessCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btLogin = findViewById(R.id.btLogin);
-        btSignup = findViewById(R.id.btSignUp);
-        etUsername = findViewById(R.id.etLoginUsername);
-        etPassword = findViewById(R.id.etLoginPassword);
+        this.btLogin = findViewById(R.id.btLogin);
+        this.btSignup = findViewById(R.id.btSignUp);
+        this.etUsername = findViewById(R.id.etLoginUsername);
+        this.etPassword = findViewById(R.id.etLoginPassword);
 
-        btLogin.setProgress(0);
+        this.btLogin.setProgress(0);
         DatabaseAccess dbAccess = new DatabaseAccess(this);
 
-        btLogin.setOnClickListener(new View.OnClickListener() {
+        this.btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 btLogin.setProgress(0);
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseAccessCal
 
             }
         });
-        btSignup.setOnClickListener(new View.OnClickListener() {
+        this.btSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, Signup.class);
@@ -98,16 +98,16 @@ public class MainActivity extends AppCompatActivity implements DatabaseAccessCal
             mIntent.putExtra("userData", (Serializable) data);
             startActivity(mIntent);
         } else {
-            btLogin.setProgress(-1);
+            this.btLogin.setProgress(-1);
 
-            etUsername.setOnClickListener(new View.OnClickListener() {
+            this.etUsername.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     btLogin.setProgress(0);
                 }
             });
 
-            etPassword.setOnClickListener(new View.OnClickListener() {
+            this.etPassword.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     btLogin.setProgress(0);

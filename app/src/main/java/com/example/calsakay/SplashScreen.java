@@ -37,15 +37,14 @@ public class SplashScreen extends AppCompatActivity implements DatabaseAccessCal
                 writer.write("0");
                 writer.flush();
                 writer.close();
-                Toast.makeText(this, readFile(), Toast.LENGTH_LONG).show();
             } catch (Exception e){
-                Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+                e.printStackTrace();
             }
         }
 
-        status = readFile();
+        this.status = readFile();
 
-        if (status.contentEquals("0")){
+        if (this.status.contentEquals("0")){
             openMainActivity = new Intent(SplashScreen.this, MainActivity.class);
             openActivity();
         } else {
@@ -84,8 +83,8 @@ public class SplashScreen extends AppCompatActivity implements DatabaseAccessCal
     @Override
     public void QueryResponse(List<String[]> data) {
         if(data.size() > 0){
-            openMainActivity = new Intent(SplashScreen.this, Dashboard.class);
-            openMainActivity.putExtra("userData", (Serializable) data);
+            this.openMainActivity = new Intent(SplashScreen.this, Dashboard.class);
+            this.openMainActivity.putExtra("userData", (Serializable) data);
             openActivity();
         }
     }

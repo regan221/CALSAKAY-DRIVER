@@ -50,19 +50,19 @@ public class FindDriversFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        currentActivity = (Dashboard) getActivity();
-        btFindDriver = view.findViewById(R.id.btFindDrivers);
-        spPickupPoint = view.findViewById(R.id.spPickupPoint);
-        spDropoffPoint = view.findViewById(R.id.spDropoffPoint);
-        spPersons = view.findViewById(R.id.spPersons);
-        userId = Integer.parseInt(currentActivity.getUserData().get(0)[0]);
-        listMaxPersons = 20;
+        this.currentActivity = (Dashboard) getActivity();
+        this.btFindDriver = view.findViewById(R.id.btFindDrivers);
+        this.spPickupPoint = view.findViewById(R.id.spPickupPoint);
+        this.spDropoffPoint = view.findViewById(R.id.spDropoffPoint);
+        this.spPersons = view.findViewById(R.id.spPersons);
+        this.userId = Integer.parseInt(currentActivity.getUserData().get(0)[0]);
+        this.listMaxPersons = 20;
 
-        for(int i = 1; i <= listMaxPersons; i++){personNumber.add(String.valueOf(i));}
-        spPersons.setItem(personNumber);
-        spDropoffPoint.setEnabled(false);
+        for(int i = 1; i <= this.listMaxPersons; i++){this.personNumber.add(String.valueOf(i));}
+        this.spPersons.setItem(personNumber);
+        this.spDropoffPoint.setEnabled(false);
 
-        spPersons.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        this.spPersons.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 persons = Integer.parseInt(adapterView.getSelectedItem().toString());
@@ -74,7 +74,7 @@ public class FindDriversFragment extends Fragment{
             }
         });
 
-        spPickupPoint.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        this.spPickupPoint.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedPickupId = Integer.parseInt(locationList.get(i)[0]);
@@ -89,7 +89,7 @@ public class FindDriversFragment extends Fragment{
             }
         });
 
-        spDropoffPoint.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        this.spDropoffPoint.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedDropoffId = findSelectedItem(spDropoffPoint.getSelectedItem());
@@ -102,15 +102,13 @@ public class FindDriversFragment extends Fragment{
             }
         });
 
-        btFindDriver.setOnClickListener(new View.OnClickListener() {
+        this.btFindDriver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                new FindDrivers().execute();
                 btFindDriver.setProgress(0);
                 btFindDriver.setIndeterminateProgressMode(true);
                 btFindDriver.setProgress(50);
-
-                new FindDrivers().execute();
-
             }
         });
     }
@@ -125,13 +123,13 @@ public class FindDriversFragment extends Fragment{
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        currentContext = context;
+        this.currentContext = context;
         DatabaseAccess dbAccess = new DatabaseAccess(getContext());
         dbAccess.executeQuery("SELECT * FROM locations");
     }
 
     public void fillPickupPoint(List<String[]> data){
-        locationList = data;
+        this.locationList = data;
         initializePickupLocationList(data);
     }
 
@@ -140,7 +138,7 @@ public class FindDriversFragment extends Fragment{
         for(String[] row : data) {
             pickupList.add(row[1]);
         }
-        spPickupPoint.setItem(pickupList);
+        this.spPickupPoint.setItem(pickupList);
     }
 
     private void initializeDropOffLocationList(List<String[]> data, int pickupPoint){
@@ -149,12 +147,12 @@ public class FindDriversFragment extends Fragment{
             dropoffList.add(row[1]);
         }
         dropoffList.remove(pickupPoint);
-        spDropoffPoint.setItem(dropoffList);
+        this.spDropoffPoint.setItem(dropoffList);
     }
 
     private int findSelectedItem(String name){
         int id = 0;
-        for(String[] row : locationList){
+        for(String[] row : this.locationList){
             if(name.contentEquals(row[1])){
                 id = Integer.parseInt(row[0]);
             }
@@ -163,16 +161,38 @@ public class FindDriversFragment extends Fragment{
     }
 
         class FindDrivers extends AsyncTask<Void, Void, Void> {
-        int rowCount = 5, id;
+        int id, driverId;
+        boolean passengerAccepted;
         String error;
         Statement statement;
 
-        private void checkForDrivers(int id) throws SQLException {
-            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS rowCount FROM calsakay_tbl_pending_rides WHERE id = " + id);
-
+        private void checkForDrivers(int id, String traceId) throws SQLException {
+            ResultSet resultSet = statement.executeQuery("SELECT status FROM ride_trace WHERE id = " + id + " AND trace_id = '" + traceId + "'");
+            int status = 0;
             while(resultSet.next()){
-                rowCount = resultSet.getInt("rowCount");
+                status = resultSet.getInt("status");
             }
+
+            if(status == 1){
+                passengerAccepted = false;
+            } else {
+                resultSet = statement.executeQuery("SELECT driver FROM ride_trace WHERE id = " + id + " AND trace_id = '" + traceId + "'");
+                while(resultSet.next()){
+                    driverId = resultSet.getInt("driver");
+                }
+
+                passengerAccepted = true;
+            }
+        }
+
+        private String generateTraceId() throws SQLException {
+            String traceId, previousTraceId = "";
+            ResultSet resultSet = statement.executeQuery("SELECT trace_id FROM ride_trace ORDER BY SUBSTR(trace_id FROM 1 FOR 1), CAST(SUBSTR(trace_id FROM 6) AS UNSIGNED) DESC LIMIT 1");
+            while(resultSet.next()){
+                previousTraceId = resultSet.getString("trace_id");
+            }
+            traceId = "CLSKY" + String.valueOf(Integer.parseInt(previousTraceId.substring(5)) + 1);
+            return traceId;
         }
 
         @Override
@@ -181,19 +201,25 @@ public class FindDriversFragment extends Fragment{
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection("jdbc:mysql://163.44.242.10:3306/feqxsxpi_calsakay?characterEncoding=latin1","feqxsxpi_root", "UCC2021bsitKrazy");
                 statement = connection.createStatement();
-                statement.executeUpdate("INSERT INTO calsakay_tbl_pending_rides " +
-                        "SET frontliner_id = " + userId +
-                        ", persons = " + persons +
-                        ", pickup_point = " + selectedPickupId +
-                        ", dropoff_point = " + selectedDropoffId);
+
+                String traceId = generateTraceId();
+                statement.executeUpdate("INSERT INTO ride_trace " +
+                        "SET passenger = " + userId +
+                        ", trace_id = '" + traceId +
+                        "', persons = " + persons +
+                        ", pickup = " + selectedPickupId +
+                        ", dropoff = " + selectedDropoffId +
+                        ", status = 1");
 
                 ResultSet rs= statement.getGeneratedKeys();
                 if(rs.next()){
                     id = rs.getInt(1);
                 }
 
-                while(rowCount != 0){
-                    checkForDrivers(id);
+                passengerAccepted = false;
+
+                while(passengerAccepted == false){
+                    checkForDrivers(id, traceId);
                 }
 
             } catch (Exception e) {
@@ -204,7 +230,7 @@ public class FindDriversFragment extends Fragment{
 
         @Override
         protected void onPostExecute(Void unused) {
-            currentActivity.setAccepted(true);
+            currentActivity.setAccepted(true, driverId, id);
             super.onPostExecute(unused);
         }
     }

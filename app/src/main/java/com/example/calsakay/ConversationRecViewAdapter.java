@@ -62,12 +62,12 @@ public class ConversationRecViewAdapter extends RecyclerView.Adapter<Conversatio
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvMessageSent = itemView.findViewById(R.id.tvMessageSent);
-            tvMessageRecieved = itemView.findViewById(R.id.tvMessageRecieved);
-            tvConversationRecievedTime = itemView.findViewById(R.id.tvConversationRecievedTime);
-            tvConversationSentTime = itemView.findViewById(R.id.tvConversationSentTime);
-            cvConversationRecieved = itemView.findViewById(R.id.cvConversationRecieved);
-            cvConversationSent = itemView.findViewById(R.id.cvConversationSend);
+            this.tvMessageSent = itemView.findViewById(R.id.tvMessageSent);
+            this.tvMessageRecieved = itemView.findViewById(R.id.tvMessageRecieved);
+            this.tvConversationRecievedTime = itemView.findViewById(R.id.tvConversationRecievedTime);
+            this.tvConversationSentTime = itemView.findViewById(R.id.tvConversationSentTime);
+            this.cvConversationRecieved = itemView.findViewById(R.id.cvConversationRecieved);
+            this.cvConversationSent = itemView.findViewById(R.id.cvConversationSend);
         }
     }
 }
