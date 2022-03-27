@@ -40,6 +40,7 @@ public class FindDriversFragment extends Fragment{
     private SmartMaterialSpinner<String> spPickupPoint, spDropoffPoint, spPersons;
     private List<String[]> locationList;
     private List<String> personNumber = new ArrayList<>();
+    private ArrayList<String> rideTraceInfo = new ArrayList<>();
     private CircularProgressButton btFindDriver;
     private int btProgress, selectedPickupId, selectedDropoffId, userId, persons, listMaxPersons;
     private Bundle savedState = null;
@@ -163,11 +164,11 @@ public class FindDriversFragment extends Fragment{
         class FindDrivers extends AsyncTask<Void, Void, Void> {
         int id, driverId;
         boolean passengerAccepted;
-        String error;
+        String error, traceId;
         Statement statement;
 
         private void checkForDrivers(int id, String traceId) throws SQLException {
-            ResultSet resultSet = statement.executeQuery("SELECT status FROM ride_trace WHERE id = " + id + " AND trace_id = '" + traceId + "'");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM ride_trace WHERE id = " + id + " AND trace_id = '" + traceId + "'");
             int status = 0;
             while(resultSet.next()){
                 status = resultSet.getInt("status");
@@ -186,13 +187,13 @@ public class FindDriversFragment extends Fragment{
         }
 
         private String generateTraceId() throws SQLException {
-            String traceId, previousTraceId = "";
+            String traceIdGen, previousTraceId = "";
             ResultSet resultSet = statement.executeQuery("SELECT trace_id FROM ride_trace ORDER BY SUBSTR(trace_id FROM 1 FOR 1), CAST(SUBSTR(trace_id FROM 6) AS UNSIGNED) DESC LIMIT 1");
             while(resultSet.next()){
                 previousTraceId = resultSet.getString("trace_id");
             }
-            traceId = "CLSKY" + String.valueOf(Integer.parseInt(previousTraceId.substring(5)) + 1);
-            return traceId;
+            traceIdGen = "CLSKY" + String.valueOf(Integer.parseInt(previousTraceId.substring(5)) + 1);
+            return traceIdGen;
         }
 
         @Override
@@ -202,7 +203,7 @@ public class FindDriversFragment extends Fragment{
                 Connection connection = DriverManager.getConnection("jdbc:mysql://163.44.242.10:3306/feqxsxpi_calsakay?characterEncoding=latin1","feqxsxpi_root", "UCC2021bsitKrazy");
                 statement = connection.createStatement();
 
-                String traceId = generateTraceId();
+                traceId = generateTraceId();
                 statement.executeUpdate("INSERT INTO ride_trace " +
                         "SET passenger = " + userId +
                         ", trace_id = '" + traceId +
@@ -230,7 +231,15 @@ public class FindDriversFragment extends Fragment{
 
         @Override
         protected void onPostExecute(Void unused) {
-            currentActivity.setAccepted(true, driverId, id);
+            rideTraceInfo.add(String.valueOf(id));
+            rideTraceInfo.add(traceId);
+            rideTraceInfo.add(String.valueOf(userId));
+            rideTraceInfo.add(String.valueOf(driverId));
+            rideTraceInfo.add(String.valueOf(persons));
+            rideTraceInfo.add(String.valueOf(selectedPickupId));
+            rideTraceInfo.add(String.valueOf(selectedDropoffId));
+            rideTraceInfo.add("2");
+            currentActivity.setAccepted(true, driverId, id, rideTraceInfo);
             super.onPostExecute(unused);
         }
     }

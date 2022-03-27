@@ -10,6 +10,7 @@ import com.luseen.spacenavigation.SpaceOnClickListener;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -88,10 +89,6 @@ public class Dashboard extends AppCompatActivity implements DatabaseAccessCallba
     }
 
     private void showFragment(int itemIndex){
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.flDashboard, this.fgProfile)
-                .commit();
-
         switch (itemIndex){
             case 0:
                 getSupportFragmentManager().beginTransaction()
@@ -147,15 +144,23 @@ public class Dashboard extends AppCompatActivity implements DatabaseAccessCallba
         return accepted;
     }
 
-    public void setAccepted(boolean accpt, int driverId, int rideTraceId){
+    public void setAccepted(boolean accpt, int driverId, int rideTraceId, ArrayList<String> rideTraceInfo){
         this.accepted = accpt;
         Bundle bundle = new Bundle();
         bundle.putInt("driverId", driverId);
         bundle.putInt("rideTraceId", rideTraceId);
+        bundle.putStringArrayList("rideTraceInfo", rideTraceInfo);
         this.fgPassengerAcceptedFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flDashboard, this.fgPassengerAcceptedFragment)
                 .commit();
+    }
+
+    public void droppedOff(){
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.flDashboard, this.fgFindDrivers)
+                .commit();
+        this.accepted = false;
     }
 
     public List<String[]> getUserData() {

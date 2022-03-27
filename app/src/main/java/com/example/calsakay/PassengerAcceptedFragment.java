@@ -11,10 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,21 +25,23 @@ import com.github.clans.fab.FloatingActionMenu;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 public class PassengerAcceptedFragment extends Fragment {
     private int driverId, userId, rideTraceId, rideStatus;
+    private boolean droppedOff = false;
     String[] rideStatusText = {
             "Your driver will be picking you up now!",
             "You have been picked up!",
@@ -47,9 +51,11 @@ public class PassengerAcceptedFragment extends Fragment {
     FloatingActionMenu fmPassengerAcceptedMenu;
     FloatingActionButton fbPassengerAcceptedMenuItem1, fbPassengerAcceptedMenuItem2;
     TextView tvRideStatus, tvDriverName, tvDriverMobileNumber, tvDriverVehicleType, tvDriverPlateNumber, tvDriveEmail;
+    Button btPassengerPickedup;
     Context currentContext;
     Dashboard currentActivity;
     List<String[]> driverDetails;
+    ArrayList<String> rideTraceInfo;
     Messages messageData;
 
     @Override
@@ -66,6 +72,7 @@ public class PassengerAcceptedFragment extends Fragment {
         this.tvDriverVehicleType = view.findViewById(R.id.tvDriverVehicleType);
         this.tvDriverPlateNumber = view.findViewById(R.id.tvDriverPlateNumber);
         this.tvDriveEmail = view.findViewById(R.id.tvDriveEmail);
+        this.btPassengerPickedup = view.findViewById(R.id.btPassengerPickedup);
         this.currentActivity = (Dashboard) getActivity();
         this.userId = Integer.parseInt(currentActivity.getUserData().get(0)[0]);
 
@@ -75,6 +82,59 @@ public class PassengerAcceptedFragment extends Fragment {
                 Intent gotoConvo = new Intent(currentContext, Conversation.class);
                 gotoConvo.putExtra("messageData", messageData);
                 currentContext.startActivity(gotoConvo);
+            }
+        });
+
+        this.btPassengerPickedup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseAccess dbAccess = new DatabaseAccess(currentContext);
+                dbAccess.executeNonQuery("INSERT INTO ride_trace SET " +
+                                "trace_id = '" + rideTraceInfo.get(1) +
+                                "', passenger = " + rideTraceInfo.get(2) +
+                                ", driver = " + rideTraceInfo.get(3) +
+                                ", persons = " + rideTraceInfo.get(4) +
+                                ", pickup = " + rideTraceInfo.get(5) +
+                                ", dropoff = " + rideTraceInfo.get(6) +
+                                ", status = 4"
+                        );
+
+                btPassengerPickedup.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        this.fbPassengerAcceptedMenuItem2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new SweetAlertDialog(currentContext, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Cancel Ride")
+                        .setContentText("Are you sure you want to cancel your ride?")
+                        .setCancelText("No")
+                        .setConfirmText("Yes.")
+                        .showCancelButton(true)
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.cancel();
+                            }
+                        })
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                DatabaseAccess dbAccess = new DatabaseAccess(currentContext);
+                                dbAccess.executeNonQuery("INSERT INTO ride_trace SET " +
+                                        "trace_id = '" + rideTraceInfo.get(1) +
+                                        "', passenger = " + rideTraceInfo.get(2) +
+                                        ", driver = " + rideTraceInfo.get(3) +
+                                        ", persons = " + rideTraceInfo.get(4) +
+                                        ", pickup = " + rideTraceInfo.get(5) +
+                                        ", dropoff = " + rideTraceInfo.get(6) +
+                                        ", status = 6"
+                                );
+                                currentActivity.droppedOff();
+                            }
+                        })
+                        .show();
             }
         });
     }
@@ -91,6 +151,7 @@ public class PassengerAcceptedFragment extends Fragment {
         super.onAttach(context);
         this.driverId = getArguments().getInt("driverId");
         this.rideTraceId = getArguments().getInt("rideTraceId");
+        this.rideTraceInfo = getArguments().getStringArrayList("rideTraceInfo");
         this.currentContext = context;
         DatabaseAccess dbAccess = new DatabaseAccess(context);
         dbAccess.executeQuery("SELECT *, 'DRIVER DETAILS' as Data FROM calsakay_tbl_users WHERE id = " + this.driverId);
@@ -148,6 +209,14 @@ public class PassengerAcceptedFragment extends Fragment {
                     this.userId,
                     data.get(0)[0]);
 
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    handler.postDelayed(this, 5000);
+                    new CheckStatus().execute();
+                }
+            }, 3000);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -155,13 +224,6 @@ public class PassengerAcceptedFragment extends Fragment {
 
         class CheckStatus extends AsyncTask<Void, Void, Void> {
         Statement statement;
-
-        private void checkStatus() throws SQLException {
-            ResultSet resultSet = statement.executeQuery("SELECT status WHERE id = " + rideTraceId);
-            while(resultSet.next()){
-                rideStatus = resultSet.getInt("status");
-            }
-        }
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -171,8 +233,10 @@ public class PassengerAcceptedFragment extends Fragment {
                 statement = connection.createStatement();
                 rideStatus = 2;
 
-                //TODO: FIND A WAY TO CHANGE A VIEW ACCORDING TO CURRENT RIDE STATUS
-
+                ResultSet resultSet = statement.executeQuery("SELECT status FROM ride_trace WHERE trace_id = '" + rideTraceInfo.get(1) + "' ORDER BY id DESC LIMIT 1");
+                while(resultSet.next()){
+                    rideStatus = resultSet.getInt("status");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -181,7 +245,37 @@ public class PassengerAcceptedFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void unused) {
-
+            switch (rideStatus){
+                case 2:
+                    tvRideStatus.setText(rideStatusText[0]);
+                    btPassengerPickedup.setVisibility(View.VISIBLE);
+                    break;
+                case 3:
+                    tvRideStatus.setText(rideStatusText[1]);
+                    break;
+                case 4:
+                    tvRideStatus.setText(rideStatusText[2]);
+                    break;
+                case 5:
+                    if(droppedOff == false){
+                        new SweetAlertDialog(currentContext, SweetAlertDialog.SUCCESS_TYPE)
+                                .setTitleText("Dropped Off")
+                                .setContentText("You are now at your destination. Thank you for using CALSAKAY! Stay safe!")
+                                .setConfirmText("Ok")
+                                .showCancelButton(false)
+                                .setCustomImage(getResources().getDrawable(R.drawable.ic_dialog_dropped_off))
+                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                        sweetAlertDialog.cancel();
+                                    }
+                                })
+                                .show();
+                        currentActivity.droppedOff();
+                        droppedOff = true;
+                    }
+                    break;
+            }
             super.onPostExecute(unused);
         }
     }

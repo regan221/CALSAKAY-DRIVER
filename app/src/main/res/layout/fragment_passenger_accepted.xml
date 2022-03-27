@@ -107,6 +107,18 @@
             android:text="Email: "
             />
 
+        <Button
+            android:id="@+id/btPassengerPickedup"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="80dp"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:text="I have been picked Up"
+            android:textColor="@color/white"
+            android:visibility="invisible"
+            />
+
     </RelativeLayout>
 
 </RelativeLayout>
