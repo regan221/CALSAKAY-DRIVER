@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/calsakay_login_bg" />
+        app:srcCompat="@drawable/calsakay_driver_login_bg" />
 
     <com.github.florent37.materialtextfield.MaterialTextField
         android:id="@+id/usernameField"

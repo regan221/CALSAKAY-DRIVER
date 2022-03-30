@@ -1,6 +1,8 @@
 package com.example.calsakay;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -20,7 +22,7 @@ public class Dashboard extends AppCompatActivity implements DatabaseAccessCallba
     private List<String[]> userData;
     ProfileFragment fgProfile = new ProfileFragment();
     HistoryFragment fgHistory = new HistoryFragment();
-    FindDriversFragment fgFindDrivers = new FindDriversFragment();
+    FindPassengersFragment fgFindDrivers = new FindPassengersFragment();
     MessagesFragment fgMessages = new MessagesFragment();
     PassengerAcceptedFragment fgPassengerAcceptedFragment = new PassengerAcceptedFragment();
     public boolean accepted;
@@ -171,15 +173,7 @@ public class Dashboard extends AppCompatActivity implements DatabaseAccessCallba
     @Override
     public void QueryResponse(List<String[]> data) {
         switch (data.get(0)[data.get(0).length - 1]){
-            case "DRIVER DETAILS":
-                fgPassengerAcceptedFragment.setDriverDetails(data);
-                break;
-            case "PASSENGER DETAILS":
-                fgPassengerAcceptedFragment.initializeMessageDetails(data);
-                break;
-            default:
-                this.fgFindDrivers.fillPickupPoint(data);
-                break;
+
         }
     }
 }

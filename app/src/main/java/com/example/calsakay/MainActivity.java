@@ -57,27 +57,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseAccessCal
                 btLogin.setIndeterminateProgressMode(true);
                 btLogin.setProgress(50);
 
-                dbAccess.executeQuery("SELECT id," +
-                        "first_name," +
-                        "last_name," +
-                        "birthday," +
-                        "gender," +
-                        "mobile_number," +
-                        "address," +
-                        "medical_job," +
-                        "company_name," +
-                        "company_address," +
-                        "company_number," +
-                        "front_image_name," +
-                        "back_image_name," +
-                        "orcr_back_img," +
-                        "email," +
-                        "user_image," +
-                        "username," +
-                        "password," +
-                        "account_status," +
-                        "date_joined " +
-                        "FROM `calsakay_tbl_users` WHERE username = '" + inputUsername + "' AND password  = '" + inputPassword +"' AND role = 1");
+                dbAccess.executeQuery("SELECT * FROM `calsakay_tbl_users` WHERE username = '" + inputUsername + "' AND password  = '" + inputPassword +"' AND role = 2");
 
             }
         });

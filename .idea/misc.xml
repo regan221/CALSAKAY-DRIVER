@@ -11,6 +11,7 @@
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/conversation_item.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/fragment_find_drivers.xml" value="0.26510416666666664" />
+        <entry key="app/src/main/res/layout/fragment_find_passengers.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_fragmentmo.xml" value="0.17239583333333333" />
         <entry key="app/src/main/res/layout/fragment_history.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/layout/fragment_messages.xml" value="0.26510416666666664" />
@@ -22,6 +23,7 @@
         <entry key="app/src/main/res/layout/history_item.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/message_item.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/nav_menu.xml" value="0.18802083333333333" />
+        <entry key="app/src/main/res/layout/passenger_list_item.xml" value="0.1" />
       </map>
     </option>
   </component>

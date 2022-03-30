@@ -38,19 +38,20 @@ import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
+// TODO: BAGUHIN MO TO. DAPAT DETAILS NI PASSENGER NAKALAGAY RITO
 
 public class PassengerAcceptedFragment extends Fragment {
-    private int driverId, userId, rideTraceId, rideStatus;
+    private int passengerId, userId, rideTraceId, rideStatus;
     private boolean droppedOff = false;
     String[] rideStatusText = {
             "Your driver will be picking you up now!",
             "You have been picked up!",
             "You are now on the way to your destination.",
     };
-    ImageView ivDriverImage;
+    ImageView ivPassengerImage;
     FloatingActionMenu fmPassengerAcceptedMenu;
     FloatingActionButton fbPassengerAcceptedMenuItem1, fbPassengerAcceptedMenuItem2;
-    TextView tvRideStatus, tvDriverName, tvDriverMobileNumber, tvDriverVehicleType, tvDriverPlateNumber, tvDriveEmail;
+    TextView tvRideStatus, tvPassengerName, tvPassengerMobileNumber, tvDriverVehicleType, tvDriverPlateNumber, tvDriveEmail;
     Button btPassengerPickedup;
     Context currentContext;
     Dashboard currentActivity;
@@ -62,13 +63,13 @@ public class PassengerAcceptedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        this.ivDriverImage = view.findViewById(R.id.ivDriverImage);
+        this.ivPassengerImage = view.findViewById(R.id.ivDriverImage);
         this.fmPassengerAcceptedMenu = view.findViewById(R.id.fmPassengerAcceptedMenu);
         this.fbPassengerAcceptedMenuItem1 = view.findViewById(R.id.fbPassengerAcceptedMenuItem1);
         this.fbPassengerAcceptedMenuItem2 = view.findViewById(R.id.fbPassengerAcceptedMenuItem2);
         this.tvRideStatus = view.findViewById(R.id.tvRideStatus);
-        this.tvDriverName = view.findViewById(R.id.tvDriverName);
-        this.tvDriverMobileNumber = view.findViewById(R.id.tvDriverMobileNumber);
+        this.tvPassengerName = view.findViewById(R.id.tvDriverName);
+        this.tvPassengerMobileNumber = view.findViewById(R.id.tvDriverMobileNumber);
         this.tvDriverVehicleType = view.findViewById(R.id.tvDriverVehicleType);
         this.tvDriverPlateNumber = view.findViewById(R.id.tvDriverPlateNumber);
         this.tvDriveEmail = view.findViewById(R.id.tvDriveEmail);
@@ -149,12 +150,12 @@ public class PassengerAcceptedFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        this.driverId = getArguments().getInt("driverId");
+        this.passengerId = getArguments().getInt("driverId");
         this.rideTraceId = getArguments().getInt("rideTraceId");
         this.rideTraceInfo = getArguments().getStringArrayList("rideTraceInfo");
         this.currentContext = context;
         DatabaseAccess dbAccess = new DatabaseAccess(context);
-        dbAccess.executeQuery("SELECT *, 'DRIVER DETAILS' as Data FROM calsakay_tbl_users WHERE id = " + this.driverId);
+        dbAccess.executeQuery("SELECT *, 'DRIVER DETAILS' as Data FROM calsakay_tbl_users WHERE id = " + this.passengerId);
     }
 
     public void setDriverDetails(List<String[]> data){
@@ -170,12 +171,12 @@ public class PassengerAcceptedFragment extends Fragment {
         InputStream stream = new ByteArrayInputStream(Base64.decode(driverImageValue.getBytes(), Base64.DEFAULT));
         Bitmap chatImageBitmap = BitmapFactory.decodeStream(stream);
         this.tvRideStatus.setText(rideStatusText[0]);
-        this.ivDriverImage.setImageBitmap(chatImageBitmap);
-        this.tvDriverMobileNumber.setText(this.tvDriverMobileNumber.getText() + driverMobileNo);
+        this.ivPassengerImage.setImageBitmap(chatImageBitmap);
+        this.tvPassengerMobileNumber.setText(this.tvPassengerMobileNumber.getText() + driverMobileNo);
         this.tvDriverVehicleType.setText(this.tvDriverVehicleType.getText() + driverVehicle);
         this.tvDriverPlateNumber.setText(this.tvDriverPlateNumber.getText() + driverPlateNo);
         this.tvDriveEmail.setText(this.tvDriveEmail.getText() + driverEmail);
-        this.tvDriverName.setText(this.tvDriverName.getText() + driverNameValue);
+        this.tvPassengerName.setText(this.tvPassengerName.getText() + driverNameValue);
 
         DatabaseAccess dbAccess = new DatabaseAccess(currentContext);
         dbAccess.executeQuery("SELECT calsakay_tbl_users.user_image AS chatmateImage, " +
@@ -184,8 +185,8 @@ public class PassengerAcceptedFragment extends Fragment {
                 "messages.sender, messages.reciever, messages.message_id, messages.message, messages.read, messages.time, messages.read, 'PASSENGER DETAILS' as Data " +
                 "FROM `messages` JOIN calsakay_tbl_users ON " +
                 "IF(messages.sender = " + this.userId + ", messages.reciever = calsakay_tbl_users.id, messages.sender = calsakay_tbl_users.id)" +
-                "WHERE (`reciever` = " + this.userId + " AND `sender` = " + this.driverId + ") " +
-                "OR (`reciever` = " + this.driverId + " AND `sender` = " + userId + ") " +
+                "WHERE (`reciever` = " + this.userId + " AND `sender` = " + this.passengerId + ") " +
+                "OR (`reciever` = " + this.passengerId + " AND `sender` = " + userId + ") " +
                 "ORDER BY message_id DESC LIMIT 1");
     }
 
@@ -205,7 +206,7 @@ public class PassengerAcceptedFragment extends Fragment {
                     data.get(0)[1],
                     data.get(0)[2],
                     (data.get(0)[7].contentEquals("1")),
-                    this.driverId,
+                    this.passengerId,
                     this.userId,
                     data.get(0)[0]);
 

@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Base64;
@@ -32,6 +34,8 @@ public class ProfileFragment extends Fragment {
     TextView tv_firstname, tv_lastname, tv_birthday, tv_gender, tv_mobile_number, tv_address, tv_medical_job, tv_company_name, tv_company_address, tv_company_number;
     ImageView id_front_image, id_back_image, iv_profile_image;
     List<String> list = new ArrayList<String>();
+    private Dashboard currentActivity;
+    private int userId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,6 +62,25 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+    private List<String[]> groupByTraceId(List<String[]> myList){
+        for(int i = 0; i < (myList.size() - 1); i++){
+            if(myList.get(i)[1].contentEquals(myList.get(i + 1)[1])){
+                myList.remove(i + 1);
+            }
+        }
+        return myList;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        this.currentActivity = (Dashboard) getActivity();
+        this.userId = Integer.parseInt(currentActivity.getUserData().get(0)[0]);
+        List<String[]> myList = currentActivity.getUserData();
+
+
+    }
+
     public class getInfo extends AsyncTask<Void, Void, Void>{
         String firstname, lastname, birthday, gender, mobile_number, address, medical_job, company_name, company_address, company_number;
         String front_image, back_image, user_image;
@@ -70,7 +93,7 @@ public class ProfileFragment extends Fragment {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection("jdbc:mysql://163.44.242.10:3306/feqxsxpi_calsakay?characterEncoding=latin1","feqxsxpi_root", "UCC2021bsitKrazy");
                 Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM calsakay_tbl_users WHERE id = 89");
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM calsakay_tbl_users WHERE id = " + userId);
 
                 while (resultSet.next()){
                     firstname = resultSet.getString("first_name");
