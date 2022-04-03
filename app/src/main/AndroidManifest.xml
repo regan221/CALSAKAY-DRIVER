@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.calsakay">
-    <!-- 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 -->
+    package="com.example.calsakay_driver">
+    <!-- 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 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -17,35 +17,34 @@
         android:theme="@style/Theme.CALSAKAY"
         tools:replace="android:icon">
         <activity
-            android:name=".HIstoryView"
+            android:name="com.example.calsakay_driver.HIstoryView"
             android:exported="false" />
         <activity
-            android:name=".Signup"
+            android:name="com.example.calsakay_driver.Signup"
             android:exported="false" />
         <activity
-            android:name=".Conversation"
+            android:name="com.example.calsakay_driver.Conversation"
             android:exported="false"></activity>
         <activity
-            android:name=".SplashScreen"
+            android:name="com.example.calsakay_driver.SplashScreen"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".Dashboard"
+            android:name="com.example.calsakay_driver.Dashboard"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.calsakay_driver.MainActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.calsakay.fileprovider"
+            android:authorities="com.example.calsakay_driver.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

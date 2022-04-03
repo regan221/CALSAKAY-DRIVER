@@ -45,47 +45,45 @@
         android:id="@+id/rvConversation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="60dp"
         android:layout_marginTop="60dp"
-        />
+        android:layout_marginBottom="60dp" />
 
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:strokeWidth="1dp"
-        app:strokeColor="@color/black"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:padding="5dp"
-        >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="5dp"
-        >
+        app:strokeColor="@color/black"
+        app:strokeWidth="1dp">
 
-
-        <EditText
-            android:id="@+id/etTypeMEssage"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Type a message..."
-            android:textColor="#333"
-            android:textSize="20sp"
-            android:layout_weight="70"
-            android:inputType="textLongMessage"
-            />
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
 
-        <com.dd.CircularProgressButton
-            android:id="@+id/btMessageSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
 
-            android:layout_weight="30"
-            />
+            <EditText
+                android:id="@+id/etTypeMEssage"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:hint="Type a message..."
+                android:inputType="textLongMessage"
+                android:textColor="#333"
+                android:textSize="20sp"
 
-    </LinearLayout>
+                />
+
+            <com.dd.CircularProgressButton
+                android:id="@+id/btMessageSend"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/oca"
+                android:layout_weight="1" />
+
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
 </RelativeLayout>

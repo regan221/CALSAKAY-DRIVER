@@ -8,7 +8,7 @@
     >
 
     <ImageView
-        android:id="@+id/ivDriverImage"
+        android:id="@+id/ivPassengerImage"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         />
@@ -18,8 +18,8 @@
         android:id="@+id/fmPassengerAcceptedMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ivDriverImage"
-        android:layout_alignEnd="@+id/ivDriverImage"
+        android:layout_below="@id/ivPassengerImage"
+        android:layout_alignEnd="@+id/ivPassengerImage"
         android:layout_marginTop="-35dp"
         android:layout_marginRight="30dp"
         app:menu_colorNormal="@color/oca"
@@ -36,7 +36,7 @@
             app:fab_colorNormal="@color/red"
             android:src="@drawable/ic_fab_menu_cancel"
             app:fab_size="mini"
-            app:fab_label="Cancel Driver"
+            app:fab_label="Cancel Ride"
             />
 
         <com.github.clans.fab.FloatingActionButton
@@ -54,8 +54,8 @@
     </com.github.clans.fab.FloatingActionMenu>
 
     <RelativeLayout
-        android:id="@+id/rlDriverDetails"
-        android:layout_below="@+id/ivDriverImage"
+        android:id="@+id/rlPassengerDetails"
+        android:layout_below="@+id/ivPassengerImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="20dp"
@@ -68,53 +68,52 @@
             />
 
         <TextView
-            android:id="@+id/tvDriverName"
-            android:layout_below="@+id/tvRideStatus"
+            android:id="@+id/tvPassengerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name: "
-            />
+            android:layout_below="@+id/tvRideStatus"
+            android:text="Name: " />
 
         <TextView
-            android:id="@+id/tvDriverMobileNumber"
-            android:layout_below="@id/tvDriverName"
+            android:id="@+id/tvPassengerMobileNumber"
+            android:layout_below="@id/tvPassengerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mobile Number: "
             />
 
         <TextView
-            android:id="@+id/tvDriverVehicleType"
-            android:layout_below="@id/tvDriverMobileNumber"
+            android:id="@+id/tvPassengerJob"
+            android:layout_below="@id/tvPassengerMobileNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vehicle Type: "
+            android:text="Job: "
             />
 
         <TextView
-            android:id="@+id/tvDriverPlateNumber"
-            android:layout_below="@+id/tvDriverVehicleType"
+            android:id="@+id/tvPassengerAge"
+            android:layout_below="@+id/tvPassengerJob"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Plate Number: "
+            android:text="Age: "
             />
 
         <TextView
-            android:id="@+id/tvDriveEmail"
-            android:layout_below="@+id/tvDriverPlateNumber"
+            android:id="@+id/tvPassengerEmail"
+            android:layout_below="@+id/tvPassengerAge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email: "
             />
 
         <Button
-            android:id="@+id/btPassengerPickedup"
+            android:id="@+id/btPassengerDroppedoff"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="80dp"
             android:layout_width="300dp"
             android:layout_height="60dp"
-            android:text="I have been picked Up"
+            android:text="Drop-off Passenger"
             android:textColor="@color/white"
             android:visibility="invisible"
             />
