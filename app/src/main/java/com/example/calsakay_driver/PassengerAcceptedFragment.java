@@ -240,7 +240,7 @@ public class PassengerAcceptedFragment extends Fragment {
         }
     }
 
-        class CheckStatus extends AsyncTask<Void, Void, Void> {
+    class CheckStatus extends AsyncTask<Void, Void, Void> {
         Statement statement;
 
         @Override

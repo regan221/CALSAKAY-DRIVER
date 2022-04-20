@@ -108,10 +108,11 @@ public class Conversation extends AppCompatActivity implements DatabaseAccessCal
     @Override
     public void QueryResponse(List<String[]> data) {
         if(data != null){
-            this.chatmateImage = data.get(0)[9];
-            InputStream stream = new ByteArrayInputStream(Base64.decode(chatmateImage.getBytes(), Base64.DEFAULT));
-            Bitmap chatImageBitmap = BitmapFactory.decodeStream(stream);
-            this.chatImage.setImageBitmap(chatImageBitmap);
+//            this.chatmateImage = data.get(0)[9];
+//            InputStream stream = new ByteArrayInputStream(Base64.decode(chatmateImage.getBytes(), Base64.DEFAULT));
+//            Bitmap chatImageBitmap = BitmapFactory.decodeStream(stream);
+//            this.chatImage.setImageBitmap(chatImageBitmap);
+
             if(this.convo.size() == 0){
                 for (String[] row : data) {
                     this.convo.add(new ConversationModel(row[5],row[7], row[1]));
